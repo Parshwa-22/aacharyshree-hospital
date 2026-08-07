@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { X, Mail, Loader2, ShieldCheck } from "lucide-react";
-import { useCustomerAuth } from "../../context/CustomerAuthContext";
+import { useCustomerAuth } from "../../../context/CustomerAuthContext";
 
 export default function AuthModal() {
   const { modalOpen, closeModal, requestOtp, verifyOtp, onAuthSuccess } = useCustomerAuth();
