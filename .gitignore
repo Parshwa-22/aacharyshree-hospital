@@ -1,0 +1,19 @@
+# Secrets and local environment configuration
+.env
+.env.*
+!.env.example
+
+# Java / Maven
+**/target/
+*.jar
+
+# Node / Vite
+**/node_modules/
+**/dist/
+
+# IDE and operating system files
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db

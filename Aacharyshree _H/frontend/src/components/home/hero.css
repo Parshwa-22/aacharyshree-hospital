@@ -1,0 +1,17 @@
+/* Hero slide transition animations, selected per-slide from the admin panel. */
+
+@keyframes heroFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.hero-anim-fade {
+  animation: heroFadeIn 900ms ease-in-out;
+}
+
+@keyframes heroSlideIn {
+  from { opacity: 0; transform: translateX(4%); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.hero-anim-slide {
+  animation: heroSlideIn 900ms ease-out;
+}

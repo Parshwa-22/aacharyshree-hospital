@@ -1,0 +1,22 @@
+[Unit]
+Description=Aacharyshree Hospital Spring Boot API
+After=network.target mysql.service
+Wants=mysql.service
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/opt/aacharyshree-hospital/aacharyshree-hospital
+EnvironmentFile=/etc/aacharyshree/api.env
+ExecStart=/usr/bin/java -jar /opt/aacharyshree-hospital/aacharyshree-hospital/target/hospital-0.1.0.jar
+SuccessExitStatus=143
+Restart=always
+RestartSec=10
+
+# Prevent a compromised process from writing to most of the OS.
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

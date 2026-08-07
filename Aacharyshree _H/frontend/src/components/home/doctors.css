@@ -1,0 +1,79 @@
+/* SCROLL ANIMATION */
+@keyframes autoScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* TRACK */
+.scroll-track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  animation: autoScroll 25s linear infinite;
+}
+
+/* STOP ON HOVER (FIXED) */
+.group:hover .scroll-track {
+  animation-play-state: paused;
+}
+
+/* CARD */
+.doctor-card {
+  min-width: 260px;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: transform 0.3s;
+}
+
+.doctor-card:hover {
+  transform: translateY(-6px);
+}
+
+/* NAME STRIP */
+.name-strip {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  overflow: hidden;
+}
+
+/* GRADIENT + ANGLE */
+.name-strip::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: skewY(-6deg);
+  background: linear-gradient(
+    to right,
+    #47C5B9,
+    #26AFDE,
+    #A0DCDF
+  );
+  z-index: 1;
+}
+
+/* TEXT ABOVE */
+.name-strip span {
+  position: relative;
+  z-index: 2;
+}
+
+/* 📱 MOBILE SPEED FIX */
+@media (max-width: 768px) {
+  .scroll-track {
+    animation-duration: 15s; /* faster for mobile */
+  }
+}
