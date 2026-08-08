@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Menu, X, ShoppingCart, User, LogOut } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -78,7 +79,89 @@ const Navbar = () => {
     );
   };
 
+  const mobileDrawer = isOpen && typeof document !== "undefined"
+    ? createPortal(
+      <>
+        <div
+          className="mobile-nav-overlay md:hidden"
+          onClick={() => setIsOpen(false)}
+          aria-hidden="true"
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(15, 39, 66, 0.48)",
+            zIndex: 9999,
+          }}
+        />
+        <div
+          className={`mobile-nav-drawer md:hidden transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            bottom: 0,
+            width: "min(82vw, 360px)",
+            minHeight: "100dvh",
+            overflowY: "auto",
+            background: "linear-gradient(180deg, #ffffff 0%, #47C5B9 48%, #26AFDE 100%)",
+            opacity: 1,
+            visibility: "visible",
+            isolation: "isolate",
+            boxShadow: "12px 0 30px rgba(15, 39, 66, 0.24)",
+            borderRight: "1px solid rgba(255,255,255,.7)",
+            zIndex: 10000,
+          }}
+        >
+          <div className="p-6 flex flex-col gap-6 text-[#0f2742] font-semibold text-lg">
+            <div className="flex justify-end">
+              <button onClick={() => setIsOpen(false)} aria-label="Close menu">
+                <X size={28} />
+              </button>
+            </div>
+
+            {navItems.map((item) => renderLink(item, () => setIsOpen(false), true))}
+
+            <select
+              value={i18n.language}
+              onChange={(e) => changeLanguage(e.target.value)}
+              className="bg-white/50 text-[#0f2742] border border-white/50 rounded-md px-3 py-2 text-sm font-semibold backdrop-blur-md focus:outline-none"
+            >
+              {LANGUAGES.map((lang) => (
+                <option key={lang.code} value={lang.code}>{lang.label}</option>
+              ))}
+            </select>
+
+            <Link to="/cart" onClick={() => setIsOpen(false)} className="flex items-center gap-2 relative w-fit">
+              <ShoppingCart size={20} />
+              Cart {count > 0 && `(${count})`}
+            </Link>
+
+            {isAuthenticated ? (
+              <div className="mt-4 flex items-center justify-between">
+                <span className="flex items-center gap-1.5 text-sm font-semibold">
+                  <User size={16} /> <span className="max-w-[180px] truncate">{email}</span>
+                </span>
+                <button onClick={() => { logout(); setIsOpen(false); }} className="flex items-center gap-1 text-sm text-red-500">
+                  <LogOut size={16} /> Log out
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => { requireAuth(() => {}); setIsOpen(false); }}
+                className="mt-4 px-6 py-3 font-bold rounded-md bg-gradient-to-r from-[#47C5B9] to-[#26AFDE] text-white transition hover:scale-105"
+              >
+                Login / Register
+              </button>
+            )}
+          </div>
+        </div>
+      </>,
+      document.body,
+    )
+    : null;
+
   return (
+    <>
     <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-[linear-gradient(to_right,white_18%,#47C5B9_60%,#26AFDE_80%,#A0DCDF_100%)] shadow-lg">
 
       <div className="w-full flex items-center justify-between h-[80px]">
@@ -156,88 +239,9 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div
-        className={`
-          mobile-nav-drawer md:hidden fixed top-0 left-0 h-full w-[75%]
-          bg-[#A0DCDF] bg-gradient-to-b from-white via-[#47C5B9] to-[#26AFDE] opacity-100
-          backdrop-blur-none shadow-2xl border-r border-white/40
-          transform transition-transform duration-300 z-[100]
-          ${isOpen ? "translate-x-0" : "-translate-x-full"}
-        `}
-        style={{ background: "linear-gradient(180deg, #ffffff 0%, #47C5B9 48%, #26AFDE 100%)", opacity: 1, zIndex: 100 }}
-      >
-        <div className="p-6 flex flex-col gap-6 text-[#0f2742] font-semibold text-lg">
-
-          <div className="flex justify-end">
-            <button onClick={() => setIsOpen(false)}>
-              <X size={28} />
-            </button>
-          </div>
-
-          {navItems.map((item) => renderLink(item, () => setIsOpen(false), true))}
-
-          <select
-            value={i18n.language}
-            onChange={(e) => changeLanguage(e.target.value)}
-            className="bg-white/50 text-[#0f2742] border border-white/50 rounded-md px-3 py-2 text-sm font-semibold backdrop-blur-md focus:outline-none"
-          >
-            {LANGUAGES.map((lang) => (
-              <option key={lang.code} value={lang.code}>
-                {lang.label}
-              </option>
-            ))}
-          </select>
-
-          <Link
-            to="/cart"
-            onClick={() => setIsOpen(false)}
-            className="flex items-center gap-2 relative w-fit"
-          >
-            <ShoppingCart size={20} />
-            Cart {count > 0 && `(${count})`}
-          </Link>
-
-          {isAuthenticated ? (
-            <div className="mt-4 flex items-center justify-between">
-                  <span className="flex items-center gap-1.5 text-sm font-semibold">
-                  <User size={16} /> <span className="max-w-[180px] truncate">{email}</span>
-              </span>
-              <button
-                onClick={() => {
-                  logout();
-                  setIsOpen(false);
-                }}
-                className="flex items-center gap-1 text-sm text-red-500"
-              >
-                <LogOut size={16} /> Log out
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={() => {
-                requireAuth(() => {});
-                setIsOpen(false);
-              }}
-              className="
-                mt-4 px-6 py-3 font-bold rounded-md
-                bg-gradient-to-r from-[#47C5B9] to-[#26AFDE]
-                text-white
-                transition hover:scale-105
-              "
-            >
-              Login / Register
-            </button>
-          )}
-        </div>
-      </div>
-
-      {isOpen && (
-        <div
-          className="mobile-nav-overlay fixed inset-0 z-[90] bg-black/45 md:hidden"
-          onClick={() => setIsOpen(false)}
-        />
-      )}
     </nav>
+    {mobileDrawer}
+    </>
   );
 };
 
