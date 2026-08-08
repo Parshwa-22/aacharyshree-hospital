@@ -68,6 +68,11 @@ export default function Login() {
           </button>
         </form>
 
+        <p className="text-xs text-slate-400 text-center mt-6">
+          No account yet? Ask another admin, or use{" "}
+          <code className="bg-slate-100 px-1 rounded">POST /api/auth/register</code> with the
+          registration secret from the backend's <code className="bg-slate-100 px-1 rounded">application.properties</code>.
+        </p>
       </div>
     </div>
   );

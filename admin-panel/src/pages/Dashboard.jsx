@@ -12,7 +12,6 @@ import {
   ShoppingCart,
   PhoneCall,
   Hash,
-  MapPin,
 } from "lucide-react";
 import apiClient from "../api/client";
 
@@ -30,7 +29,6 @@ const cards = [
   { key: "departments", label: "Departments", to: "/departments", icon: Building2, endpoint: "/api/departments" },
   { key: "counters", label: "Homepage Counters", to: "/counters", icon: Hash, endpoint: "/api/counters" },
   { key: "nav-items", label: "Nav Tabs", to: "/nav-items", icon: MenuIcon, endpoint: "/api/nav-items" },
-  { key: "monks", label: "Monk Groups", to: "/monks", icon: MapPin, endpoint: "/api/monks" },
 ];
 
 export default function Dashboard() {

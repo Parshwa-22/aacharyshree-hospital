@@ -16,7 +16,6 @@ import {
   Phone,
   Hash,
   LogOut,
-  MapPin,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
@@ -35,7 +34,6 @@ const links = [
   { to: "/nav-items", label: "Navbar & Footer Tabs", icon: MenuIcon },
   { to: "/trust-info", label: "Trust Info (About page)", icon: Landmark },
   { to: "/contact-settings", label: "Click-to-Call Numbers", icon: Phone },
-  { to: "/monks", label: "Monk Locations", icon: MapPin },
   { to: "/site-settings", label: "Site Settings", icon: Settings },
 ];
 

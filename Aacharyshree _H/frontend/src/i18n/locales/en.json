@@ -65,10 +65,5 @@
   "address": "Our Address",
   "hospitalName": "Aacharyashree Hospital",
   "addressLine1": "Near Main Road, Kolhapur",
-  "addressLine2": "Maharashtra, India - 416001",
-  "monksTitle": "Monk Live Locations",
-  "monksSubtitle": "Find the current vihar location of our Acharyas and groups.",
-  "locationUpdating": "Location being updated",
-  "viewOnMap": "View on Google Maps",
-  "noLocations": "No active locations have been published yet."
+  "addressLine2": "Maharashtra, India - 416001"
 }

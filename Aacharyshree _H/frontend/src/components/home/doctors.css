@@ -24,8 +24,6 @@
 /* CARD */
 .doctor-card {
   min-width: 260px;
-  width: 260px;
-  min-height: 390px;
   background: white;
   border-radius: 16px;
   overflow: hidden;
@@ -79,5 +77,3 @@
     animation-duration: 15s; /* faster for mobile */
   }
 }
-
-.doctor-card img { height: 240px; object-fit: cover; }

@@ -15,7 +15,6 @@ import NavItems from "./pages/NavItems";
 import TrustInfo from "./pages/TrustInfo";
 import SiteSettings from "./pages/SiteSettings";
 import ContactSettings from "./pages/ContactSettings";
-import Monks from "./pages/Monks";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
@@ -38,7 +37,6 @@ export default function App() {
       <Route path="/trust-info" element={<ProtectedRoute><TrustInfo /></ProtectedRoute>} />
       <Route path="/site-settings" element={<ProtectedRoute><SiteSettings /></ProtectedRoute>} />
       <Route path="/contact-settings" element={<ProtectedRoute><ContactSettings /></ProtectedRoute>} />
-      <Route path="/monks" element={<ProtectedRoute><Monks /></ProtectedRoute>} />
     </Routes>
   );
 }

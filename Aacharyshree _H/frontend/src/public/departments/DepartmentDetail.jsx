@@ -178,6 +178,14 @@ export default function DepartmentDetail() {
             </>
           )}
 
+          <div className="mt-12">
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 rounded-md bg-[#4DA3F7] px-8 py-4 font-semibold text-white transition-all duration-300 hover:bg-[#1565C0]"
+            >
+              Book an Appointment
+            </Link>
+          </div>
         </section>
 
         <Accessibility />

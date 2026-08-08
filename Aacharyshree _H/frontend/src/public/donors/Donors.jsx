@@ -67,7 +67,7 @@ export default function Donors() {
               {donors.map((donor) => (
                 <div
                   key={donor.id}
-                  className="bg-[#F8FAFD] rounded-2xl p-6 min-h-[280px] flex flex-col items-center text-center shadow-sm hover:shadow-md transition"
+                  className="bg-[#F8FAFD] rounded-2xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition"
                 >
                   <div className="w-20 h-20 rounded-full bg-white shadow flex items-center justify-center mb-4 overflow-hidden">
                     <img
