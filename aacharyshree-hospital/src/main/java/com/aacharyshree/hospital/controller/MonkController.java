@@ -41,7 +41,11 @@ public class MonkController {
         return repository.findById(id).map(m -> {
             Double previousLatitude = m.getLatitude();
             Double previousLongitude = m.getLongitude();
-            m.setName(input.getName()); m.setGroupName(input.getGroupName()); m.setPhoto(input.getPhoto()); m.setTravelReason(input.getTravelReason());
+            m.setName(input.getName()); m.setGroupName(input.getGroupName());
+            // A Vihar update may only change location/details. Keep the previously
+            // persisted Cloudinary URL when the client does not send a new photo.
+            if (input.getPhoto() != null) m.setPhoto(input.getPhoto());
+            m.setTravelReason(input.getTravelReason());
             if (input.getLocationLink() != null) m.setLocationLink(input.getLocationLink());
             if ((input.getLatitude() != null) != (input.getLongitude() != null)) throw new IllegalArgumentException("Latitude and longitude must be supplied together");
             if (input.getLatitude() != null && input.getLongitude() != null) { validate(input.getLatitude(), input.getLongitude()); m.setLatitude(input.getLatitude()); m.setLongitude(input.getLongitude()); }
