@@ -9,6 +9,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /** A travelling monk/group with a current coordinate and an append-only history. */
 @Entity
@@ -31,6 +33,9 @@ public class Monk {
     /** JSON array of timestamped updates; ready for a future GPS device feed. */
     @Column(columnDefinition = "TEXT")
     private String locationUpdates = "[]";
+    @OneToMany(mappedBy = "monk", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OrderBy("recordedAt ASC")
+    private List<MonkLocation> locationHistory = new ArrayList<>();
     private Boolean isActive = true;
     @CreationTimestamp @Column(updatable = false) private LocalDateTime createdAt;
     @UpdateTimestamp private LocalDateTime updatedAt;

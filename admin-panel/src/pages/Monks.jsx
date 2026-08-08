@@ -7,8 +7,8 @@ const empty = { name: "", groupName: "", photo: "", travelReason: "", locationLi
 
 function coordsFromLink(link) {
   if (!link) return null;
-  const match = link.match(/(?:@|!3d)(-?\d+(?:\.\d+)?)[,!](?:4d)?(-?\d+(?:\.\d+)?)/);
-  return match ? { latitude: Number(match[1]), longitude: Number(match[2]) } : null;
+  const match = link.match(/(?:@|!3d)(-?\d+(?:\.\d+)?)[,!](?:4d)?(-?\d+(?:\.\d+)?)|(?:[?&](?:q|query|ll)=)(-?\d+(?:\.\d+)?)(?:,|%2C)(-?\d+(?:\.\d+)?)/i);
+  return match ? { latitude: Number(match[1] ?? match[3]), longitude: Number(match[2] ?? match[4]) } : null;
 }
 
 async function reverseGeocode(latitude, longitude) {
@@ -27,13 +27,16 @@ export default function Monks() {
     setError("");
     navigator.geolocation.getCurrentPosition(async ({ coords }) => {
       const latitude = Number(coords.latitude.toFixed(7)); const longitude = Number(coords.longitude.toFixed(7));
-      setForm((old) => ({ ...old, latitude, longitude, locationLabel: "Resolving location…" }));
+      setForm((old) => ({ ...old, latitude, longitude, locationLink: `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`, locationLabel: "Resolving location…" }));
       try { set("locationLabel", await reverseGeocode(latitude, longitude)); } catch { set("locationLabel", "Current location"); }
-    }, () => setError("Location permission was denied. Paste a Google Maps shared link instead."), { enableHighAccuracy: true, timeout: 15000 });
+    }, (geoError) => {
+      const message = geoError.code === 1 ? "Location permission was denied. Paste a Google Maps shared link instead." : geoError.code === 2 ? "Your location is currently unavailable. Try again or paste a Google Maps shared link." : "Location lookup timed out. Try again or paste a Google Maps shared link.";
+      setError(message);
+    }, { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 });
   };
   const parseLink = async (value) => {
     set("locationLink", value); const point = coordsFromLink(value); if (!point) return;
-    setForm((old) => ({ ...old, ...point, locationLabel: "Resolving location…" }));
+    setForm((old) => ({ ...old, ...point, locationLink: `https://www.google.com/maps/search/?api=1&query=${point.latitude},${point.longitude}`, locationLabel: "Resolving location…" }));
     try { set("locationLabel", await reverseGeocode(point.latitude, point.longitude)); } catch { set("locationLabel", "Location from Google Maps"); }
   };
   const open = (item = null) => { setError(""); setEditing(item); setForm(item ? { ...empty, ...item } : empty); setModalOpen(true); };
@@ -41,9 +44,10 @@ export default function Monks() {
     event.preventDefault(); setBusy(true); setError("");
     try {
       const point = coordsFromLink(form.locationLink); const payload = { ...form, ...(point || {}) };
-      const saved = editing ? (await apiClient.put(`/api/monks/${editing.id}`, payload)).data : (await apiClient.post("/api/monks", payload)).data;
-      if (editing && (payload.latitude !== editing.latitude || payload.longitude !== editing.longitude) && payload.latitude && payload.longitude) await apiClient.post(`/api/monks/${editing.id}/location`, { ...payload, source: "ADMIN" });
-      if (!editing && payload.latitude && payload.longitude) await apiClient.post(`/api/monks/${saved.id}/location`, { ...payload, source: "ADMIN" });
+      if (form.locationLink && !point && (form.latitude === "" || form.longitude === "")) throw new Error("That Google Maps link does not contain usable coordinates. Use live location or paste a shared pin link.");
+      if (payload.latitude === "" || payload.longitude === "" || payload.latitude == null || payload.longitude == null) throw new Error("Choose Use live location or paste a valid Google Maps location before saving.");
+      if (editing) await apiClient.put(`/api/monks/${editing.id}`, payload);
+      else await apiClient.post("/api/monks", payload);
       setEditing(null); setModalOpen(false); await load();
     } catch (err) { setError(err.response?.data?.message || "Could not save Vihar update."); } finally { setBusy(false); }
   };

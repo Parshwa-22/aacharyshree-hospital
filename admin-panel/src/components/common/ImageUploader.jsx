@@ -40,9 +40,10 @@ export default function ImageUploader({ label, value, onChange, accept = "image/
           {uploading ? "Uploading..." : value ? "Replace" : "Upload"}
         </button>
 
-        {value && (
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-500 truncate max-w-[160px]">{value}</span>
+      {value && (
+        <div className="flex items-center gap-2">
+          <img src={value} alt="Uploaded preview" className="h-14 w-14 rounded-md border border-slate-200 object-cover" />
+          <span className="text-xs text-slate-500 truncate max-w-[160px]">{value}</span>
             <button
               type="button"
               onClick={() => onChange("")}
