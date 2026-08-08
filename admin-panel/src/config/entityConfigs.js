@@ -45,6 +45,20 @@ export const ROOM_AMENITY_OPTIONS = [
 ];
 
 export const entityConfigs = {
+  monks: {
+    title: "Monks / Acharya Groups", endpoint: "/api/monks", listTitleField: "name", listSubtitleField: "groupName",
+    fields: [
+      { name: "name", label: "Monk / Group Name", type: "text", required: true },
+      { name: "groupName", label: "Group Name (optional)", type: "text" },
+      { name: "photo", label: "Monk / group photo", type: "image" },
+      { name: "travelReason", label: "Travel reason / Vihar details", type: "textarea" },
+      { name: "locationLink", label: "Google Maps shared location link", type: "text" },
+      { name: "locationLabel", label: "Location name", type: "text" },
+      { name: "latitude", label: "Latitude (optional if link contains coordinates)", type: "number" },
+      { name: "longitude", label: "Longitude (optional if link contains coordinates)", type: "number" },
+      { name: "isActive", label: "Visible on website", type: "checkbox", default: true },
+    ],
+  },
   events: {
     title: "Events", endpoint: "/api/events", listTitleField: "name", listSubtitleField: "eventDate",
     fields: [

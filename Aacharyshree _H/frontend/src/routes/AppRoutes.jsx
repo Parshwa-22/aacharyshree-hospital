@@ -15,6 +15,7 @@ import OrderConfirmation from "../public/orders/OrderConfirmation";
 import TrackOrder from "../public/orders/TrackOrder";
 import Events from "../public/events/Events";
 import Gallery from "../public/gallery/Gallery";
+import Monks from "../public/monks/Monks";
 
 const AppRoutes = () => {
   return (
@@ -34,6 +35,7 @@ const AppRoutes = () => {
       <Route path="/track-order" element={<TrackOrder />} />
       <Route path="/events" element={<Events />} />
       <Route path="/gallery" element={<Gallery />} />
+      <Route path="/monks" element={<Monks />} />
     </Routes>
   );
 };

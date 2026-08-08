@@ -17,6 +17,7 @@ import SiteSettings from "./pages/SiteSettings";
 import ContactSettings from "./pages/ContactSettings";
 import Events from "./pages/Events";
 import Gallery from "./pages/Gallery";
+import Monks from "./pages/Monks";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
@@ -41,6 +42,7 @@ export default function App() {
       <Route path="/contact-settings" element={<ProtectedRoute><ContactSettings /></ProtectedRoute>} />
       <Route path="/events" element={<ProtectedRoute><Events /></ProtectedRoute>} />
       <Route path="/gallery" element={<ProtectedRoute><Gallery /></ProtectedRoute>} />
+      <Route path="/monks" element={<ProtectedRoute><Monks /></ProtectedRoute>} />
     </Routes>
   );
 }

@@ -24,6 +24,7 @@ export const fetchNavItems = (location) => safeGet("/api/nav-items", { location,
 export const fetchDepartments = () => safeGet("/api/departments", { active: true });
 export const fetchEvents = () => safeGet("/api/events", { active: true });
 export const fetchGallery = () => safeGet("/api/gallery", { active: true });
+export const fetchMonks = () => safeGet("/api/monks", { active: true });
 
 export async function fetchSiteSettings() {
   try {

@@ -20,6 +20,11 @@ public class Monk {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank private String name;
+    private String groupName;
+    private String photo;
+    @Column(columnDefinition = "TEXT") private String travelReason;
+    /** Shared Google Maps link supplied by admin or a future GPS client. */
+    @Column(columnDefinition = "TEXT") private String locationLink;
     private Double latitude;
     private Double longitude;
     private String locationLabel;
