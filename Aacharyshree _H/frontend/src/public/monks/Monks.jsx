@@ -51,7 +51,6 @@ export default function Monks() {
         <header className="mb-8 text-center">
           <p className="text-sm font-semibold uppercase tracking-[.2em] text-[#26AFDE]">Vihar Tracking</p>
           <h1 className="mt-2 text-3xl font-bold text-[#0f2742] sm:text-5xl">Acharya &amp; Sangh Live Locations</h1>
-          <p className="mx-auto mt-3 max-w-2xl text-slate-500">Follow current locations and the recorded travel path of each Acharya group.</p>
         </header>
         {!monks.length ? <p className="rounded-2xl border border-dashed border-slate-300 bg-white p-16 text-center text-slate-500">No monk locations published yet.</p> : <>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -62,7 +61,7 @@ export default function Monks() {
           {active && <section className="mt-8 overflow-hidden rounded-3xl bg-white shadow-xl">
             <div className="grid lg:grid-cols-[1.1fr_.9fr]">
               <div className="min-h-[360px] bg-slate-100">{embedUrl(active) ? <iframe title={`${active.name} current location`} src={embedUrl(active)} className="h-full min-h-[360px] w-full border-0" loading="lazy" /> : <div className="flex min-h-[360px] items-center justify-center p-8 text-center text-slate-500">Location link is awaiting coordinates.</div>}</div>
-              <div className="p-6 sm:p-8"><div className="flex items-start justify-between gap-4"><div><h2 className="text-2xl font-bold text-[#0f2742]">{active.name}</h2>{active.travelReason && <p className="mt-2 text-slate-600">{active.travelReason}</p>}</div>{mapUrl(active) && <a href={mapUrl(active)} target="_blank" rel="noreferrer" className="rounded-full bg-[#26AFDE] p-3 text-white" aria-label="Open directions"><Navigation size={18} /></a>}</div>
+              <div className="p-6 sm:p-8">{(active.photo || active.image) && <img src={mediaUrl(active.photo || active.image)} alt={active.name} className="mb-5 h-48 w-full rounded-2xl object-cover object-center shadow-sm" />}<div className="flex items-start justify-between gap-4"><div><h2 className="text-2xl font-bold text-[#0f2742]">{active.name}</h2>{active.travelReason && <p className="mt-2 text-slate-600">{active.travelReason}</p>}</div>{mapUrl(active) && <a href={mapUrl(active)} target="_blank" rel="noreferrer" className="rounded-full bg-[#26AFDE] p-3 text-white" aria-label="Open directions"><Navigation size={18} /></a>}</div>
                 <div className="mt-6 flex items-center gap-2 text-sm text-slate-500"><Route size={17} className="text-[#26AFDE]" /> Vihar history ({orderedHistory.length} updates)</div>
                 <div className="relative mt-6 space-y-8 before:absolute before:bottom-4 before:left-1/2 before:top-4 before:w-1 before:-translate-x-1/2 before:rounded-full before:bg-gradient-to-b before:from-[#47C5B9] before:to-[#26AFDE] max-sm:before:left-3 max-sm:before:translate-x-0">
                   {orderedHistory.map((point, index) => {
