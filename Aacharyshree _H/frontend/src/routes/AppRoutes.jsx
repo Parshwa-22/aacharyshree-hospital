@@ -12,6 +12,7 @@ import Wishlist from "../public/wishlist/Wishlist";
 import Checkout from "../public/checkout/Checkout";
 import OrderConfirmation from "../public/orders/OrderConfirmation";
 import TrackOrder from "../public/orders/TrackOrder";
+import Monks from "../public/monks/Monks";
 
 const AppRoutes = () => {
   return (
@@ -29,6 +30,7 @@ const AppRoutes = () => {
       <Route path="/checkout" element={<Checkout />} />
       <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
       <Route path="/track-order" element={<TrackOrder />} />
+      <Route path="/monks" element={<Monks />} />
     </Routes>
   );
 };

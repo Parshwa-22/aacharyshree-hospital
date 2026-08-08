@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaBars, FaTimes, FaRobot } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 import { MdLanguage } from "react-icons/md";
 
 function Navbar() {
@@ -38,10 +38,6 @@ function Navbar() {
             </select>
           </div>
 
-          {/* Chatbot */}
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-blue-700">
-            <FaRobot /> Chat
-          </button>
         </div>
 
         {/* Mobile Menu Icon */}
@@ -73,9 +69,6 @@ function Navbar() {
             <option value="MR">Marathi</option>
           </select>
 
-          <button className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
-            <FaRobot /> Chat
-          </button>
         </div>
       )}
     </nav>

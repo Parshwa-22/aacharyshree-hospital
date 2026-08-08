@@ -136,6 +136,7 @@ const Navbar = () => {
                 </button>
               </div>
             ) : (
+              <div className="flex items-center gap-2">
               <button
                 onClick={() => requireAuth(() => {})}
                 className="
@@ -150,6 +151,7 @@ const Navbar = () => {
               >
                 Login / Register
               </button>
+              </div>
             )}
           </div>
 
@@ -164,7 +166,7 @@ const Navbar = () => {
 
       <div
         className={`
-          md:hidden fixed top-0 left-0 h-full w-[75%]
+          md:hidden fixed top-0 left-0 z-[60] h-full w-[75%]
           bg-gradient-to-b from-white via-[#47C5B9] via-[#26AFDE] to-[#A0DCDF]
           backdrop-blur-lg shadow-xl
           transform transition-transform duration-300
@@ -238,7 +240,7 @@ const Navbar = () => {
 
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/40 md:hidden"
+          className="fixed inset-0 z-40 bg-black/40 md:hidden"
           onClick={() => setIsOpen(false)}
         />
       )}

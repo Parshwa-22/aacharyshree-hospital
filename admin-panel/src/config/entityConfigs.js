@@ -45,6 +45,20 @@ export const ROOM_AMENITY_OPTIONS = [
 ];
 
 export const entityConfigs = {
+  monks: {
+    title: "Monk / Acharya Locations",
+    endpoint: "/api/monks",
+    listTitleField: "name",
+    listSubtitleField: "locationLabel",
+    fields: [
+      { name: "name", label: "Monk / Group Name", type: "text", required: true },
+      { name: "locationLabel", label: "Current Location", type: "text", placeholder: "City / village / landmark" },
+      { name: "latitude", label: "Latitude", type: "number", min: -90, max: 90 },
+      { name: "longitude", label: "Longitude", type: "number", min: -180, max: 180 },
+      { name: "locationUpdates", label: "Location history (JSON, optional)", type: "textarea" },
+      { name: "isActive", label: "Visible on website", type: "checkbox", default: true },
+    ],
+  },
   doctors: {
     title: "Doctors",
     endpoint: "/api/doctors",
