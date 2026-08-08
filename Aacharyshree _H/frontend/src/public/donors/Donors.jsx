@@ -82,16 +82,16 @@ export default function Donors() {
               Donor listings will appear here once added in the admin panel.
             </p>
           ) : (
-            <>
+            <div className="relative z-0 flex flex-col gap-12">
               {vipDonors.length > 0 && (
-                <div>
+                <div className="relative z-0 rounded-3xl border-2 border-[#47C5B9]/40 bg-gradient-to-br from-[#F0FEFC] to-white p-5 shadow-md md:p-7">
                   <div className={`mx-auto grid gap-6 ${vipDonors.length === 1 ? "max-w-xl grid-cols-1" : vipDonors.length === 2 || vipDonors.length === 4 ? "max-w-4xl grid-cols-1 sm:grid-cols-2" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"}`}>
                     {vipDonors.map(renderDonor)}
                   </div>
                 </div>
               )}
               {regularDonors.length > 0 && (
-                <div>
+                <div className="relative z-0 border-t-4 border-[#E6EEF5] pt-10">
                   <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {regularDonors.map(renderDonor)}
                   </div>
@@ -127,7 +127,7 @@ export default function Donors() {
               ))}
             </div>
             )}
-            </>
+            </div>
           )}
         </section>
 
