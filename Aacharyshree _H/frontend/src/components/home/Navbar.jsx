@@ -164,6 +164,7 @@ const Navbar = () => {
           transform transition-transform duration-300 z-[60]
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
         `}
+        style={{ backgroundColor: "#A0DCDF", opacity: 1 }}
       >
         <div className="p-6 flex flex-col gap-6 text-[#0f2742] font-semibold text-lg">
 
