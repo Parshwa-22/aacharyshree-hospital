@@ -10,22 +10,27 @@ export default function ImageUploader({ label, value, onChange, accept = "image/
   const inputRef = useRef(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
+  const [localPreview, setLocalPreview] = useState("");
 
   const handleFile = async (file) => {
     if (!file) return;
     setUploading(true);
     setError("");
+    const preview = URL.createObjectURL(file);
+    setLocalPreview(preview);
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const { data } = await apiClient.post("/api/upload", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      onChange(data.url);
+      const { data } = await apiClient.post("/api/upload", formData);
+      const uploadedUrl = data?.url || data?.secure_url;
+      if (!uploadedUrl) throw new Error("The server did not return an image URL.");
+      onChange(uploadedUrl);
     } catch (err) {
       setError(err.response?.data?.message || "Upload failed");
     } finally {
       setUploading(false);
+      URL.revokeObjectURL(preview);
+      setLocalPreview("");
     }
   };
 
@@ -58,6 +63,7 @@ export default function ImageUploader({ label, value, onChange, accept = "image/
             </button>
           </div>
         )}
+        {!value && localPreview && <img src={localPreview} alt="Selected upload preview" className="h-14 w-14 rounded-md border border-slate-200 object-cover" />}
       </div>
 
       <input
