@@ -68,12 +68,12 @@ export default function Donors() {
               {[...donors].sort((a, b) => Number(!!b.vip) - Number(!!a.vip)).map((donor) => (
                 <div
                   key={donor.id}
-                  className={`${donor.vip ? "sm:col-span-2 lg:col-span-2" : ""} bg-[#F8FAFD] rounded-2xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition`}
+                  className={`${donor.vip ? "sm:col-span-2 lg:col-span-2" : ""} min-w-0 h-full bg-[#F8FAFD] rounded-2xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition`}
                 >
-                  <div className={`${donor.vip ? "w-full h-56 rounded-xl" : "w-24 h-24 rounded-full"} bg-white shadow flex items-center justify-center mb-4 overflow-hidden`}>
-                    {donor.image ? <img src={donor.image} alt={donor.name} className={`${donor.vip ? "w-full h-full" : "w-16 h-16"} object-cover`} /> : <BrandLogo className={`${donor.vip ? "w-full h-full" : "w-16 h-16"}`} alt={donor.name} />}
+                  <div className={`${donor.vip ? "aspect-[4/3] w-full rounded-xl" : "h-24 w-24 rounded-full"} bg-white shadow flex items-center justify-center mb-4 overflow-hidden`}>
+                    {donor.image ? <img src={donor.image} alt={donor.name} className={`${donor.vip ? "h-full w-full" : "h-16 w-16"} object-cover object-center`} /> : <BrandLogo className={`${donor.vip ? "h-full w-full" : "h-16 w-16"}`} alt={donor.name} />}
                   </div>
-                  <h3 className="font-semibold text-[#0f2742]">{donor.name}</h3>
+                  <h3 className="min-h-[1.5rem] max-w-full break-words line-clamp-2 font-semibold text-[#0f2742]">{donor.name}</h3>
                   {donor.donationAmount != null && (
                     <p className="text-lg font-bold text-[#26AFDE] mt-1">
                       ₹{donor.donationAmount.toLocaleString("en-IN")}

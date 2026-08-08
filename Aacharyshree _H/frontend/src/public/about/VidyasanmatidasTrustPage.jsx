@@ -596,7 +596,7 @@ const CSS = `
   min-height: 100vh;
 }
 .vsd-org-selector {
-  max-width: 980px; margin: 22px auto 0; padding: 18px 20px;
+  max-width: 980px; margin: 28px auto 34px; padding: 20px 22px;
   background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(239,249,251,.96));
   border: 1px solid rgba(47,184,201,.25); border-radius: 20px;
   box-shadow: 0 10px 28px rgba(24,73,113,.10);
@@ -620,7 +620,7 @@ const CSS = `
   border: 1px solid rgba(47,184,201,.22); border-radius: 16px;
 }
 @media (max-width: 700px) {
-  .vsd-org-selector { margin: 12px 14px 0; padding: 14px 12px; }
+  .vsd-org-selector { margin: 20px 14px 28px; padding: 16px 12px; }
   .vsd-brand { text-align: center; font-size: .95rem; margin-bottom: 8px; }
   .vsd-org-caption { text-align: center; }
   .vsd-org-options { grid-template-columns: 1fr; gap: 8px; }

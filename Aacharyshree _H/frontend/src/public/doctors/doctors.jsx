@@ -127,19 +127,19 @@ const DoctorsPage = ({ doctors }) => {
             </h3>
 
             {/* Cards */}
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
               {groupedDoctors[dept].map((doc, i) => (
                 <div
                   key={i}
-                  className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden group"
+                  className="min-w-0 h-full bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden group flex flex-col"
                 >
 
                   {/* IMAGE */}
-                  <div className="relative">
+                  <div className="relative aspect-[4/3] w-full overflow-hidden bg-gray-50">
                     <img
                       src={doc.image}
                       alt={doc.name}
-                      className="w-full h-52 object-cover bg-gray-50"
+                      className="block h-full w-full object-cover object-center"
                     />
 
                     {/* NAME STRIP */}
@@ -151,16 +151,16 @@ const DoctorsPage = ({ doctors }) => {
                   </div>
 
                   {/* DETAILS */}
-                  <div className="p-4 text-center">
-                    <p className="text-sm font-semibold text-gray-800">
+                  <div className="flex flex-1 flex-col p-4 text-center">
+                    <p className="min-h-[2.5rem] break-words line-clamp-2 text-sm font-semibold text-gray-800">
                       {getTranslated(doc, "specialization", i18n.language)}
                     </p>
 
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="mt-1 min-h-[1rem] break-words line-clamp-1 text-xs text-gray-500">
                       {getTranslated(doc, "department", i18n.language)}
                     </p>
 
-                    <p className="text-xs text-gray-400 mt-1">
+                    <p className="mt-1 min-h-[1rem] text-xs text-gray-400">
                       {doc.experience}+ Years Experience
                     </p>
 
@@ -169,7 +169,7 @@ const DoctorsPage = ({ doctors }) => {
                     </div>
 
                     {(doc.availableDays || (doc.startTime && doc.endTime)) && (
-                      <p className="text-xs text-gray-400 mt-1">
+                      <p className="mt-1 min-h-[1rem] break-words text-xs text-gray-400">
                         {formatAvailableDays(doc.availableDays)}
                         {doc.startTime && doc.endTime
                           ? ` · ${formatTime12h(doc.startTime)}–${formatTime12h(doc.endTime)}`

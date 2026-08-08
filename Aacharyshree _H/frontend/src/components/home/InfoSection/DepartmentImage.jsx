@@ -22,14 +22,14 @@ export default function DepartmentImage({
         duration: 0.9,
         ease: "easeOut",
       }}
-      className="relative h-[300px] overflow-hidden md:h-[640px]"
+      className="relative h-[300px] w-full max-w-full min-w-0 overflow-hidden md:h-[640px]"
     >
       {/* ================= IMAGE ================= */}
 
       <img
         src={image}
         alt={title}
-        className="h-full w-full object-cover"
+        className="block h-full w-full max-w-full object-cover object-center"
       />
 
       {/* ================= DARK OVERLAY ================= */}
@@ -59,10 +59,10 @@ export default function DepartmentImage({
     left-1/2
     z-30
     -translate-x-1/2
-    text-center
+    max-w-[92%] text-center
   "
 >
-  <h2 className="text-base font-semibold uppercase tracking-[0.15em] text-white drop-shadow-xl md:text-2xl">
+  <h2 className="break-words px-2 text-base font-semibold uppercase tracking-[0.12em] text-white drop-shadow-xl md:text-2xl">
     {title}
   </h2>
 </div>
