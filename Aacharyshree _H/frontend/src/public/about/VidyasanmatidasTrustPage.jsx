@@ -551,14 +551,14 @@ export default function VidyasanmatidasTrustPage() {
     <div className="vsd-root">
       <style>{CSS}</style>
 
-      <nav className="vsd-topnav">
+      <div className="vsd-trust-switcher" aria-label="Trust sections">
         <div className="vsd-brand">विद्यासन्मतीदास सेवा संस्था</div>
         <div className="vsd-navlinks">
           <button className={main === "home" ? "active" : ""} onClick={() => setMain("home")}>होम</button>
           <button className={main === "chikitsalaya" ? "active" : ""} onClick={() => setMain("chikitsalaya")}>आचार्य चिकित्सालय</button>
           <button className={main === "academy" ? "active" : ""} onClick={() => setMain("academy")}>वीराचार्य अकादमी</button>
         </div>
-      </nav>
+      </div>
 
       {main === "home" && (
         <>
@@ -601,6 +601,12 @@ const CSS = `
   background: linear-gradient(90deg, #ffffff 0%, var(--teal-light) 45%, var(--sky) 100%);
   box-shadow: 0 2px 14px rgba(24,73,113,0.15);
 }
+.vsd-trust-switcher {
+  display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  max-width: 980px; margin: 22px auto 0; padding: 14px 18px;
+  background: rgba(255,255,255,.92); border: 1px solid rgba(47,184,201,.25);
+  border-radius: 18px; box-shadow: 0 8px 24px rgba(24,73,113,.10);
+}
 .vsd-brand { color: var(--navy); font-weight: 700; font-size: 1.05rem; letter-spacing: .02em; }
 .vsd-navlinks { display: flex; gap: 4px; }
 .vsd-navlinks button {
@@ -611,6 +617,7 @@ const CSS = `
 .vsd-navlinks button:hover { color: var(--navy); }
 .vsd-navlinks button.active { color: var(--navy); border-bottom-color: var(--navy); }
 @media (max-width: 700px) {
+  .vsd-trust-switcher { display: block; margin: 12px 14px 0; padding: 12px 10px; }
   .vsd-topnav { display: block; padding: 12px 14px; }
   .vsd-brand { text-align: center; font-size: .95rem; margin-bottom: 8px; }
   .vsd-navlinks { justify-content: center; overflow-x: auto; gap: 2px; }

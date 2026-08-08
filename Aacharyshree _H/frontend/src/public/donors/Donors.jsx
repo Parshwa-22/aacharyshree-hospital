@@ -70,7 +70,7 @@ export default function Donors() {
                   key={donor.id}
                   className={`${donor.vip ? "sm:col-span-2 lg:col-span-2" : ""} bg-[#F8FAFD] rounded-2xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition`}
                 >
-                  <div className={`${donor.vip ? "w-32 h-32" : "w-24 h-24"} rounded-full bg-white shadow flex items-center justify-center mb-4 overflow-hidden`}>
+                  <div className={`${donor.vip ? "w-full h-56 rounded-xl" : "w-24 h-24 rounded-full"} bg-white shadow flex items-center justify-center mb-4 overflow-hidden`}>
                     {donor.image ? <img src={donor.image} alt={donor.name} className={`${donor.vip ? "w-full h-full" : "w-16 h-16"} object-cover`} /> : <BrandLogo className={`${donor.vip ? "w-full h-full" : "w-16 h-16"}`} alt={donor.name} />}
                   </div>
                   <h3 className="font-semibold text-[#0f2742]">{donor.name}</h3>

@@ -3,9 +3,10 @@ import { createContext, useContext, useEffect, useState } from "react";
 const CartContext = createContext(null);
 const STORAGE_KEY = "hospital_cart_v1";
 
-function loadCart() {
+function storageKey(email) { return email ? `${STORAGE_KEY}:${email.toLowerCase()}` : STORAGE_KEY; }
+function loadCart(email = localStorage.getItem("customer_email")) {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(storageKey(email));
     return raw ? JSON.parse(raw) : [];
   } catch {
     return [];
@@ -14,15 +15,18 @@ function loadCart() {
 
 export function CartProvider({ children }) {
   const [items, setItems] = useState(loadCart);
+  const [ownerEmail, setOwnerEmail] = useState(() => localStorage.getItem("customer_email"));
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  }, [items]);
+    if (ownerEmail) localStorage.setItem(storageKey(ownerEmail), JSON.stringify(items));
+  }, [items, ownerEmail]);
 
   useEffect(() => {
-    const clearOnLogout = () => setItems([]);
+    const changeOwner = (event) => { const email = event.detail || null; setOwnerEmail(email); setItems(loadCart(email)); };
+    const clearOnLogout = () => { setOwnerEmail(null); setItems([]); };
+    window.addEventListener("customer-login", changeOwner);
     window.addEventListener("customer-logout", clearOnLogout);
-    return () => window.removeEventListener("customer-logout", clearOnLogout);
+    return () => { window.removeEventListener("customer-login", changeOwner); window.removeEventListener("customer-logout", clearOnLogout); };
   }, []);
 
   const addItem = (product, quantity = 1) => {

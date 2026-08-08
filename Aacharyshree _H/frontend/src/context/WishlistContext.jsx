@@ -3,9 +3,10 @@ import { createContext, useContext, useEffect, useState } from "react";
 const WishlistContext = createContext(null);
 const STORAGE_KEY = "hospital_wishlist_v1";
 
-function loadWishlist() {
+function storageKey(email) { return email ? `${STORAGE_KEY}:${email.toLowerCase()}` : STORAGE_KEY; }
+function loadWishlist(email = localStorage.getItem("customer_email")) {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(storageKey(email));
     return raw ? JSON.parse(raw) : [];
   } catch {
     return [];
@@ -14,15 +15,18 @@ function loadWishlist() {
 
 export function WishlistProvider({ children }) {
   const [productIds, setProductIds] = useState(loadWishlist);
+  const [ownerEmail, setOwnerEmail] = useState(() => localStorage.getItem("customer_email"));
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(productIds));
-  }, [productIds]);
+    if (ownerEmail) localStorage.setItem(storageKey(ownerEmail), JSON.stringify(productIds));
+  }, [productIds, ownerEmail]);
 
   useEffect(() => {
-    const clearOnLogout = () => setProductIds([]);
+    const changeOwner = (event) => { const email = event.detail || null; setOwnerEmail(email); setProductIds(loadWishlist(email)); };
+    const clearOnLogout = () => { setOwnerEmail(null); setProductIds([]); };
+    window.addEventListener("customer-login", changeOwner);
     window.addEventListener("customer-logout", clearOnLogout);
-    return () => window.removeEventListener("customer-logout", clearOnLogout);
+    return () => { window.removeEventListener("customer-login", changeOwner); window.removeEventListener("customer-logout", clearOnLogout); };
   }, []);
 
   const toggle = (productId) => {

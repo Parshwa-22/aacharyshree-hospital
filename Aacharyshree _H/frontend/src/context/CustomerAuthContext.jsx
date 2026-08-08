@@ -24,6 +24,7 @@ export function CustomerAuthProvider({ children }) {
     localStorage.setItem(EMAIL_KEY, data.email);
     setToken(data.token);
     setEmail(data.email);
+    window.dispatchEvent(new CustomEvent("customer-login", { detail: data.email }));
     return data;
   };
 

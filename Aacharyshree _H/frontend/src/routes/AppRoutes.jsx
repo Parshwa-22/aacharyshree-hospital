@@ -1,6 +1,7 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "../public/home/Home";
-import About from "../public/about/About";
+const About = lazy(() => import("../public/about/About"));
 import Doctors from "../public/doctors/doctors";
 import Rooms from "../public/rooms/Rooms";
 import Contact from "../public/contact/Contact";
@@ -19,7 +20,7 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
+      <Route path="/about" element={<Suspense fallback={<main className="min-h-screen bg-white" />}><About /></Suspense>} />
       <Route path="/doctors" element={<Doctors />} />
       <Route path="/rooms" element={<Rooms />} />
       <Route path="/contact" element={<Contact />} />

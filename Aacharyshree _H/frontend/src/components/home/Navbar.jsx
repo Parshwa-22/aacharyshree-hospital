@@ -159,8 +159,8 @@ const Navbar = () => {
       <div
         className={`
           md:hidden fixed top-0 left-0 h-full w-[75%]
-          bg-gradient-to-b from-white via-[#47C5B9] via-[#26AFDE] to-[#A0DCDF]
-          backdrop-blur-lg shadow-xl
+          bg-[#A0DCDF] bg-gradient-to-b from-white via-[#47C5B9] to-[#26AFDE]
+          backdrop-blur-none shadow-2xl border-r border-white/40
           transform transition-transform duration-300 z-[60]
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
         `}
