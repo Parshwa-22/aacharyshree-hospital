@@ -12,6 +12,7 @@ import {
   ShoppingCart,
   PhoneCall,
   Hash,
+  CalendarDays,
 } from "lucide-react";
 import apiClient from "../api/client";
 
@@ -29,6 +30,8 @@ const cards = [
   { key: "departments", label: "Departments", to: "/departments", icon: Building2, endpoint: "/api/departments" },
   { key: "counters", label: "Homepage Counters", to: "/counters", icon: Hash, endpoint: "/api/counters" },
   { key: "nav-items", label: "Nav Tabs", to: "/nav-items", icon: MenuIcon, endpoint: "/api/nav-items" },
+  { key: "events", label: "Events", to: "/events", icon: CalendarDays, endpoint: "/api/events" },
+  { key: "gallery", label: "Gallery Sections", to: "/gallery", icon: Image, endpoint: "/api/gallery" },
 ];
 
 export default function Dashboard() {
