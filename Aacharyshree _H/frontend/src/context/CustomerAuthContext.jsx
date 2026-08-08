@@ -32,6 +32,7 @@ export function CustomerAuthProvider({ children }) {
     localStorage.removeItem(EMAIL_KEY);
     setToken(null);
     setEmail(null);
+    window.dispatchEvent(new Event("customer-logout"));
   };
 
   // Call this instead of running an action directly whenever that action

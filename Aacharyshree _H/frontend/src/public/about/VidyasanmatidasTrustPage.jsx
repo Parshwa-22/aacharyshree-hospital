@@ -610,6 +610,12 @@ const CSS = `
 }
 .vsd-navlinks button:hover { color: var(--navy); }
 .vsd-navlinks button.active { color: var(--navy); border-bottom-color: var(--navy); }
+@media (max-width: 700px) {
+  .vsd-topnav { display: block; padding: 12px 14px; }
+  .vsd-brand { text-align: center; font-size: .95rem; margin-bottom: 8px; }
+  .vsd-navlinks { justify-content: center; overflow-x: auto; gap: 2px; }
+  .vsd-navlinks button { white-space: nowrap; font-size: .78rem; padding: 7px 9px; }
+}
 
 .vsd-hero { width: 100%; background: var(--white); display:flex; justify-content:center; }
 .vsd-hero-img { width: 100%; max-width: 900px; display: block; }

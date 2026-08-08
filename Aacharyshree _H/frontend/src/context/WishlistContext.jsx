@@ -19,6 +19,12 @@ export function WishlistProvider({ children }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(productIds));
   }, [productIds]);
 
+  useEffect(() => {
+    const clearOnLogout = () => setProductIds([]);
+    window.addEventListener("customer-logout", clearOnLogout);
+    return () => window.removeEventListener("customer-logout", clearOnLogout);
+  }, []);
+
   const toggle = (productId) => {
     setProductIds((prev) =>
       prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId]

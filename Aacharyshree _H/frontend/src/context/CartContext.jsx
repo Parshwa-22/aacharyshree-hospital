@@ -19,6 +19,12 @@ export function CartProvider({ children }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
   }, [items]);
 
+  useEffect(() => {
+    const clearOnLogout = () => setItems([]);
+    window.addEventListener("customer-logout", clearOnLogout);
+    return () => window.removeEventListener("customer-logout", clearOnLogout);
+  }, []);
+
   const addItem = (product, quantity = 1) => {
     setItems((prev) => {
       const existing = prev.find((i) => i.productId === product.id);

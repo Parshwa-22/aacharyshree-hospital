@@ -40,7 +40,7 @@ const links = [
   { to: "/gallery", label: "Photo Gallery", icon: Images },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ open = false, onClose = () => {} }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -50,7 +50,9 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-64 flex-shrink-0 bg-[#0f2742] text-white flex flex-col h-screen sticky top-0">
+    <>
+    {open && <button type="button" aria-label="Close admin menu" onClick={onClose} className="fixed inset-0 z-40 bg-black/50 md:hidden" />}
+    <aside className={`fixed inset-y-0 left-0 z-50 flex h-screen w-64 flex-shrink-0 flex-col bg-[#0f2742] text-white shadow-2xl transition-transform duration-300 md:sticky md:top-0 md:translate-x-0 md:shadow-none ${open ? "translate-x-0" : "-translate-x-full"}`}>
       <div className="px-6 py-5 border-b border-white/10">
         <p className="font-bold text-lg leading-tight">Aacharyshree</p>
         <p className="text-xs text-white/50">Admin Panel</p>
@@ -62,6 +64,7 @@ export default function Sidebar() {
             key={to}
             to={to}
             end={end}
+            onClick={onClose}
             className={({ isActive }) =>
               `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition ${
                 isActive ? "bg-brand text-white" : "text-white/70 hover:bg-white/10 hover:text-white"
@@ -84,5 +87,6 @@ export default function Sidebar() {
         </button>
       </div>
     </aside>
+    </>
   );
 }
