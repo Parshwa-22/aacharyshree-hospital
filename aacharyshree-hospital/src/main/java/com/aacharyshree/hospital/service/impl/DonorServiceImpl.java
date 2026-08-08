@@ -58,6 +58,9 @@ public class DonorServiceImpl implements DonorService {
         if (incoming.getIsActive() != null) {
             existing.setIsActive(incoming.getIsActive());
         }
+        if (incoming.getVip() != null) {
+            existing.setVip(incoming.getVip());
+        }
         existing.setTranslations(incoming.getTranslations());
         return repository.save(existing);
     }

@@ -6,6 +6,7 @@ import Accessibility from "../../shared/components/accessibility/AccessibilityBu
 import { useTranslation } from "react-i18next";
 import { fetchDonors, fetchContactSettings } from "../../api/publicApi";
 import { getTranslated } from "../../utils/translate";
+import BrandLogo from "../../components/common/BrandLogo";
 
 export default function Donors() {
   const { t, i18n } = useTranslation();
@@ -64,17 +65,13 @@ export default function Donors() {
             </p>
           ) : (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {donors.map((donor) => (
+              {[...donors].sort((a, b) => Number(!!b.vip) - Number(!!a.vip)).map((donor) => (
                 <div
                   key={donor.id}
-                  className="bg-[#F8FAFD] rounded-2xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition"
+                  className={`${donor.vip ? "sm:col-span-2 lg:col-span-2" : ""} bg-[#F8FAFD] rounded-2xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition`}
                 >
-                  <div className="w-20 h-20 rounded-full bg-white shadow flex items-center justify-center mb-4 overflow-hidden">
-                    <img
-                      src={donor.image || "/images/l1.png"}
-                      alt={donor.name}
-                      className="w-14 h-14 object-cover"
-                    />
+                  <div className={`${donor.vip ? "w-32 h-32" : "w-24 h-24"} rounded-full bg-white shadow flex items-center justify-center mb-4 overflow-hidden`}>
+                    {donor.image ? <img src={donor.image} alt={donor.name} className={`${donor.vip ? "w-full h-full" : "w-16 h-16"} object-cover`} /> : <BrandLogo className={`${donor.vip ? "w-full h-full" : "w-16 h-16"}`} alt={donor.name} />}
                   </div>
                   <h3 className="font-semibold text-[#0f2742]">{donor.name}</h3>
                   {donor.donationAmount != null && (

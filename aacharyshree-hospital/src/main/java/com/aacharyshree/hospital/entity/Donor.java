@@ -45,6 +45,8 @@ public class Donor {
 
     private Boolean isActive = true;
 
+    private Boolean vip = false;
+
     // Per-language override for donationType/message —
     // {"hi":{"donationType":"...","message":"..."}, "mr":{...}, "kn":{...}}
     @Column(columnDefinition = "TEXT")

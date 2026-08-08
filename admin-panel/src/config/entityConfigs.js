@@ -207,6 +207,7 @@ export const entityConfigs = {
       { name: "donationDate", label: "Donation Date", type: "date" },
       { name: "image", label: "Photo / Logo", type: "image" },
       { name: "message", label: "Message", type: "textarea" },
+      { name: "vip", label: "VIP Donor (featured card)", type: "checkbox", default: false },
       {
         name: "translations",
         label: "Translations",

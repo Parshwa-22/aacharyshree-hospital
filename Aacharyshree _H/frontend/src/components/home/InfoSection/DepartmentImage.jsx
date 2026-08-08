@@ -22,7 +22,7 @@ export default function DepartmentImage({
         duration: 0.9,
         ease: "easeOut",
       }}
-      className="relative h-[280px] overflow-hidden md:h-[480px]"
+      className="relative h-[300px] overflow-hidden md:h-[640px]"
     >
       {/* ================= IMAGE ================= */}
 

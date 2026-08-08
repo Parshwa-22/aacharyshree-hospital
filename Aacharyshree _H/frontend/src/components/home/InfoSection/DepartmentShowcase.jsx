@@ -43,7 +43,7 @@ export default function DepartmentShowcase() {
   if (loaded && departments.length === 0) return null;
 
   return (
-    <section className="bg-[#F8FAFD] py-14 md:py-24">
+    <section className="bg-[#F8FAFD] py-5 md:py-10">
       <div className="mx-auto max-w-[1800px]">
         {departments.map((department, index) => (
           <DepartmentSection

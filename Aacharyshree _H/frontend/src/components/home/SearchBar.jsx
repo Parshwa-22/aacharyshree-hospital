@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Search, Stethoscope, Building2 } from "lucide-react";
+import BrandLogo from "../common/BrandLogo";
 
 const placeholders = [
   {
@@ -54,11 +55,7 @@ const SearchBar = () => {
 
         {/* 🐦 LEFT LOGO */}
         <div className="hidden lg:flex w-[100px] justify-center">
-          <img
-            src="/images/l.png"
-            alt="logo"
-            className="w-16 lg:w-20 opacity-80 transition-all duration-300 hover:scale-110 hover:-translate-y-2"
-          />
+          <BrandLogo className="w-16 lg:w-20 h-16 opacity-80 transition-all duration-300 hover:scale-110 hover:-translate-y-2" />
         </div>
 
         {/* 🔍 SEARCH BAR */}
@@ -104,11 +101,7 @@ const SearchBar = () => {
 
         {/* 🐦 RIGHT LOGO */}
         <div className="hidden lg:flex w-[100px] justify-center">
-          <img
-            src="/images/l.png"
-            alt="logo"
-            className="w-16 lg:w-20 opacity-80 transition-all duration-300 hover:scale-110 hover:-translate-y-2"
-          />
+          <BrandLogo className="w-16 lg:w-20 h-16 opacity-80 transition-all duration-300 hover:scale-110 hover:-translate-y-2" />
         </div>
 
       </div>

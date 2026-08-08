@@ -8,6 +8,7 @@ import { fetchNavItems } from "../../api/publicApi";
 import { getTranslated } from "../../utils/translate";
 import { useCart } from "../../context/CartContext";
 import { useCustomerAuth } from "../../context/CustomerAuthContext";
+import BrandLogo from "../common/BrandLogo";
 
 const LANGUAGES = [
   { code: "en", label: "Eng" },
@@ -83,11 +84,7 @@ const Navbar = () => {
       <div className="w-full flex items-center justify-between h-[80px]">
 
         <Link to="/" className="h-full w-[140px] sm:w-[180px] md:w-[220px] flex items-center">
-          <img
-            src="/images/l1.png"
-            alt="logo"
-            className="h-full w-[250px] object-contain"
-          />
+          <BrandLogo className="h-full w-[250px]" />
         </Link>
 
         <div className="flex items-center justify-between w-full pl-2 pr-4 md:pr-8">

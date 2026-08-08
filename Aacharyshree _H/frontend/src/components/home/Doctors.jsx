@@ -46,7 +46,7 @@ const DoctorsSection = () => {
         </div>
       </div>
       <div className="p-4 text-center">
-        <p className="text-sm font-semibold text-gray-800">{getTranslated(doc, "specialization", i18n.language)}</p>
+        <p className="text-sm font-semibold text-gray-800 min-h-[2.5rem] line-clamp-2">{getTranslated(doc, "specialization", i18n.language)}</p>
         {doc.department && (
           <p className="text-xs text-gray-500">{getTranslated(doc, "department", i18n.language)}</p>
         )}

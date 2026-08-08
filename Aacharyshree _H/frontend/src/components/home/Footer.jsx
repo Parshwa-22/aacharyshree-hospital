@@ -7,8 +7,12 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import { fetchNavItems } from "../../api/publicApi";
 import { getTranslated } from "../../utils/translate";
+import BrandLogo from "../common/BrandLogo";
 
-const INSTAGRAM_URL = "https://www.instagram.com/vidyasanmatidas_sevasanstha?igsh=djlxdzgwMThtOTcw";
+const INSTAGRAM_URL = "https://www.instagram.com/aacharyashreechikitsalay_1008/?hl=en";
+const FACEBOOK_URL = "https://www.facebook.com/profile.php?id=61592867458239";
+const LINKEDIN_URL = "https://www.linkedin.com/";
+const MAP_EMBED_URL = "https://www.google.com/maps?q=16.7640183,74.5244917&z=17&output=embed";
 
 export default function Footer() {
   const { t, i18n } = useTranslation();
@@ -37,17 +41,14 @@ export default function Footer() {
 
           {/* LOGO + ABOUT */}
           <div>
-            <img
-              src="/images/l1.png"
-              alt="logo"
-              className="w-[160px] mb-4"
-            />
+            <BrandLogo className="w-[160px] h-20 mb-4" />
             <p className="text-sm text-gray-400 leading-relaxed">
               {t(
                 "footerAbout",
                 "Delivering trusted healthcare services with modern technology and a patient-first approach. Your health, our priority."
               )}
             </p>
+            <p className="mt-4 text-sm italic text-[#A0DCDF]">{t("footerQuote", "Compassionate care, trusted guidance, and a healthier tomorrow for every family.")}</p>
           </div>
 
           {/* LOCATION + SOCIAL */}
@@ -71,7 +72,7 @@ export default function Footer() {
             <div className="rounded-lg overflow-hidden mb-5 border border-white/10">
               <iframe
                 title="Hospital location map"
-                src="https://maps.google.com/maps?q=Aacharyshree%20Hospital%20Kolhapur&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                src={MAP_EMBED_URL}
                 width="100%"
                 height="160"
                 style={{ border: 0 }}
@@ -81,7 +82,7 @@ export default function Footer() {
             </div>
 
             <div className="flex gap-4">
-              <a href="#" aria-label="Facebook" className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition cursor-pointer">
+              <a href={FACEBOOK_URL} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition cursor-pointer">
                 <FaFacebookF size={14} />
               </a>
               <a
@@ -93,10 +94,7 @@ export default function Footer() {
               >
                 <FaInstagram size={14} />
               </a>
-              <a href="#" aria-label="Twitter" className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition cursor-pointer">
-                <FaTwitter size={14} />
-              </a>
-              <a href="#" aria-label="LinkedIn" className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition cursor-pointer">
+              <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition cursor-pointer">
                 <FaLinkedinIn size={14} />
               </a>
             </div>

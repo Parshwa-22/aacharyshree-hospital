@@ -131,7 +131,7 @@ export default function Contact() {
             <div className="w-full h-[300px] rounded-xl overflow-hidden shadow">
               <iframe
                 title="map"
-                src="https://maps.google.com/maps?q=kolhapur&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                src="https://www.google.com/maps?q=16.7640183,74.5244917&z=17&output=embed"
                 className="w-full h-full border-0"
                 loading="lazy"
               ></iframe>

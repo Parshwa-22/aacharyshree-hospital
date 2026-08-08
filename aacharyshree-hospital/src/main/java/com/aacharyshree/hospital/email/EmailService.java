@@ -38,7 +38,7 @@ public class EmailService {
             helper.setText(htmlBody, true);
             helper.setFrom(fromAddress, fromName);
             mailSender.send(message);
-        } catch (MessagingException | java.io.UnsupportedEncodingException e) {
+        } catch (Exception e) {
             // A failed email should never block the actual transaction (OTP
             // still works via the API response in dev; a payment is already
             // confirmed regardless of whether the receipt email sends) —

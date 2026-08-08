@@ -8,7 +8,7 @@ import { fetchEvents } from "../../api/publicApi";
 import { useTranslation } from "react-i18next";
 import { getTranslated } from "../../utils/translate";
 
-const json = (value) => { try { const parsed = JSON.parse(value || "[]"); return Array.isArray(parsed) ? parsed : []; } catch { return []; } };
+const json = (value) => { if (Array.isArray(value)) return value; try { const parsed = JSON.parse(value || "[]"); return Array.isArray(parsed) ? parsed : []; } catch { return []; } };
 export default function Events() {
   const { t, i18n } = useTranslation(); const [events, setEvents] = useState([]);
   useEffect(() => { fetchEvents().then((data) => setEvents(data.map((event) => ({ ...event, name: getTranslated(event, "name", i18n.language), description: getTranslated(event, "description", i18n.language) })))); }, [i18n.language]);

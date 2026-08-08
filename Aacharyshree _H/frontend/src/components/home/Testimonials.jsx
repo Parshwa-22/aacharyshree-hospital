@@ -26,7 +26,7 @@ function StarRow({ rating, onDark }) {
 }
 
 
-function VideoTestimonial({ item }) {
+function VideoTestimonial({ item, lang }) {
   const videoRef = useRef(null);
   const [muted, setMuted] = useState(true);
 
@@ -53,6 +53,7 @@ function VideoTestimonial({ item }) {
         <div>
           <span className="text-white text-sm font-semibold drop-shadow block">{item.patientName || "Patient"}</span>
           <StarRow rating={item.rating} onDark />
+          {getTranslated(item, "message", lang) && <p className="mt-1 max-w-[220px] text-xs text-white/90 line-clamp-2">{getTranslated(item, "message", lang)}</p>}
         </div>
         <button
           onClick={toggleMute}
@@ -133,7 +134,7 @@ export default function Testimonials() {
 
       <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {testimonials.map((item) => {
-          if (item.type === "VIDEO" && item.videoUrl) return <VideoTestimonial key={item.id} item={item} />;
+          if (item.type === "VIDEO" && item.videoUrl) return <VideoTestimonial key={item.id} item={item} lang={i18n.language} />;
           if (item.type === "IMAGE" && item.image) return <ImageTestimonial key={item.id} item={item} lang={i18n.language} />;
           return <TextTestimonial key={item.id} item={item} lang={i18n.language} />;
         })}
