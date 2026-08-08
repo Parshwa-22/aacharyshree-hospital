@@ -18,6 +18,13 @@ const LANGUAGES = [
   { code: "kn", label: "Kannada" },
 ];
 
+function compactEmail(value) {
+  if (!value) return "Account";
+  const [name, domain] = value.split("@");
+  if (!domain || name.length <= 8) return value;
+  return `${name.slice(0, 5)}…@${domain}`;
+}
+
 const Navbar = () => {
   const { i18n } = useTranslation();
   const { count } = useCart();
@@ -140,7 +147,7 @@ const Navbar = () => {
             {isAuthenticated ? (
               <div className="mt-4 flex items-center justify-between">
                 <span className="flex items-center gap-1.5 text-sm font-semibold">
-                  <User size={16} /> <span className="max-w-[180px] truncate">{email}</span>
+                  <User size={16} /> <span className="max-w-[125px] truncate">{compactEmail(email)}</span>
                 </span>
                 <button onClick={() => { logout(); setIsOpen(false); }} className="flex items-center gap-1 text-sm text-red-500">
                   <LogOut size={16} /> Log out
@@ -193,7 +200,7 @@ const Navbar = () => {
             {isAuthenticated ? (
               <div className="flex items-center gap-2">
                 <span className="flex items-center gap-1.5 text-xs font-semibold text-[#0f2742]" title={email}>
-                  <User size={16} /> <span className="hidden lg:inline max-w-[120px] truncate">{email}</span>
+                  <User size={16} /> <span className="hidden lg:inline max-w-[105px] truncate">{compactEmail(email)}</span>
                 </span>
                 <button
                   onClick={logout}

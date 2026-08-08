@@ -38,7 +38,7 @@ const links = [
   { to: "/site-settings", label: "Site Settings", icon: Settings },
   { to: "/events", label: "Events", icon: CalendarDays },
   { to: "/gallery", label: "Photo Gallery", icon: Images },
-  { to: "/monks", label: "Monk Live Locations", icon: MapPinned },
+  { to: "/monks", label: "Vihar Update", icon: MapPinned },
 ];
 
 export default function Sidebar({ open = false, onClose = () => {} }) {
