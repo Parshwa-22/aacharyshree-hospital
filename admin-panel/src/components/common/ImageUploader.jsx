@@ -2,6 +2,10 @@ import { useRef, useState } from "react";
 import { Upload, X, Loader2 } from "lucide-react";
 import apiClient from "../../api/client";
 
+const mediaUrl = (value) => value && value.startsWith("/")
+  ? `${import.meta.env.VITE_API_BASE_URL || ""}${value}`
+  : value;
+
 export default function ImageUploader({ label, value, onChange, accept = "image/*" }) {
   const inputRef = useRef(null);
   const [uploading, setUploading] = useState(false);
@@ -42,7 +46,7 @@ export default function ImageUploader({ label, value, onChange, accept = "image/
 
       {value && (
         <div className="flex items-center gap-2">
-          <img src={value} alt="Uploaded preview" className="h-14 w-14 rounded-md border border-slate-200 object-cover" />
+          <img src={mediaUrl(value)} alt="Uploaded preview" className="h-14 w-14 rounded-md border border-slate-200 object-cover" onError={() => setError("Uploaded image could not be loaded. Please replace it.")} />
           <span className="text-xs text-slate-500 truncate max-w-[160px]">{value}</span>
             <button
               type="button"
