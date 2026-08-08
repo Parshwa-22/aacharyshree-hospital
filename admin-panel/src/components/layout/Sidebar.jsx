@@ -16,6 +16,7 @@ import {
   Phone,
   Hash,
   LogOut,
+  CalendarDays, Images,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
@@ -35,6 +36,8 @@ const links = [
   { to: "/trust-info", label: "Trust Info (About page)", icon: Landmark },
   { to: "/contact-settings", label: "Click-to-Call Numbers", icon: Phone },
   { to: "/site-settings", label: "Site Settings", icon: Settings },
+  { to: "/events", label: "Events", icon: CalendarDays },
+  { to: "/gallery", label: "Photo Gallery", icon: Images },
 ];
 
 export default function Sidebar() {

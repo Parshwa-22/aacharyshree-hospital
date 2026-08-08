@@ -97,6 +97,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/monks/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/contacts/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/events/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/api/gallery/**").permitAll()
 
                 // Checkout and order tracking don't require a login —
                 // customers aren't accounts in this system.

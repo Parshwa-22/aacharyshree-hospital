@@ -45,6 +45,31 @@ export const ROOM_AMENITY_OPTIONS = [
 ];
 
 export const entityConfigs = {
+  events: {
+    title: "Events", endpoint: "/api/events", listTitleField: "name", listSubtitleField: "eventDate",
+    fields: [
+      { name: "name", label: "Event Name", type: "text", required: true },
+      { name: "description", label: "Description", type: "textarea" },
+      { name: "eventDate", label: "Date", type: "date" }, { name: "eventTime", label: "Time", type: "time" },
+      { name: "place", label: "Place / Location", type: "text" }, { name: "guestSpeakers", label: "Guest Speaker(s)", type: "text" },
+      { name: "eventType", label: "Event Type", type: "select", options: ["ONE_TIME", "RECURRING"], default: "ONE_TIME" },
+      { name: "recurrenceRule", label: "Recurrence Schedule", type: "text", showIf: { field: "eventType", equals: "RECURRING" } },
+      { name: "posterImages", label: "Event poster images", type: "multiImage" },
+      { name: "photos", label: "Event photos", type: "multiImage" },
+      { name: "videos", label: "Video URLs (JSON array)", type: "textarea" },
+      { name: "isNew", label: "Show New Event badge", type: "checkbox", default: true },
+      { name: "isActive", label: "Published", type: "checkbox", default: true },
+    ],
+  },
+  gallery: {
+    title: "Photo Gallery", endpoint: "/api/gallery", listTitleField: "title", listSubtitleField: "photos",
+    fields: [
+      { name: "title", label: "Section Title", type: "text", required: true },
+      { name: "photos", label: "Gallery photos", type: "multiImage" },
+      { name: "displayOrder", label: "Display Order", type: "number", min: 0 },
+      { name: "isActive", label: "Visible on website", type: "checkbox", default: true },
+    ],
+  },
   doctors: {
     title: "Doctors",
     endpoint: "/api/doctors",

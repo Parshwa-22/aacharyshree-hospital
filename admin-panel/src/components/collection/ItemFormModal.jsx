@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { X, Star } from "lucide-react";
 import ImageUploader from "../common/ImageUploader";
+import MultiImageUploader from "../common/MultiImageUploader";
 import TranslationsEditor from "../common/TranslationsEditor";
 
 function buildInitialValues(fields, existing) {
@@ -271,6 +272,10 @@ export default function ItemFormModal({ title, fields, initialItem, onClose, onS
                   onChange={(url) => setField(field.name, url)}
                   accept={field.type === "video" ? "video/*" : "image/*"}
                 />
+              )}
+
+              {field.type === "multiImage" && (
+                <MultiImageUploader label={field.label} value={values[field.name]} onChange={(value) => setField(field.name, value)} />
               )}
 
               {field.type === "translations" && (

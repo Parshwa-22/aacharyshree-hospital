@@ -100,18 +100,6 @@ const Navbar = () => {
               ))}
             </ul>
 
-            <select
-              value={i18n.language}
-              onChange={(e) => changeLanguage(e.target.value)}
-              className="bg-white/40 text-[#0f2742] border border-white/50 rounded-md px-3 py-2 text-sm font-semibold backdrop-blur-md focus:outline-none hover:bg-white transition"
-            >
-              {LANGUAGES.map((lang) => (
-                <option key={lang.code} value={lang.code}>
-                  {lang.label}
-                </option>
-              ))}
-            </select>
-
             <Link to="/cart" className="relative p-2 text-[#0f2742] hover:scale-110 transition" aria-label="Cart">
               <ShoppingCart size={22} />
               {count > 0 && (
@@ -151,6 +139,15 @@ const Navbar = () => {
                 Login / Register
               </button>
             )}
+
+            <select
+              value={i18n.language}
+              onChange={(e) => changeLanguage(e.target.value)}
+              aria-label="Language"
+              className="bg-white/40 text-[#0f2742] border border-white/50 rounded-md px-3 py-2 text-sm font-semibold backdrop-blur-md focus:outline-none hover:bg-white transition"
+            >
+              {LANGUAGES.map((lang) => <option key={lang.code} value={lang.code}>{lang.label}</option>)}
+            </select>
           </div>
 
           <div className="md:hidden text-[#0f2742] ml-auto">
@@ -167,7 +164,7 @@ const Navbar = () => {
           md:hidden fixed top-0 left-0 h-full w-[75%]
           bg-gradient-to-b from-white via-[#47C5B9] via-[#26AFDE] to-[#A0DCDF]
           backdrop-blur-lg shadow-xl
-          transform transition-transform duration-300
+          transform transition-transform duration-300 z-[60]
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
         `}
       >
@@ -238,7 +235,7 @@ const Navbar = () => {
 
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/40 md:hidden"
+          className="fixed inset-0 z-40 bg-black/40 md:hidden"
           onClick={() => setIsOpen(false)}
         />
       )}

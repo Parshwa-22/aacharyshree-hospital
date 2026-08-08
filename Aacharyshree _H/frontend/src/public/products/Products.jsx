@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Package, ShoppingCart, Heart, Check, Minus, Plus, Star } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -16,9 +16,11 @@ import { useWishlist } from "../../context/WishlistContext";
 import { useCustomerAuth } from "../../context/CustomerAuthContext";
 
 function ProductCard({ product, lang }) {
+  const { t } = useTranslation();
   const { addItem } = useCart();
   const { toggle, isWishlisted } = useWishlist();
   const { requireAuth } = useCustomerAuth();
+  const navigate = useNavigate();
   const [added, setAdded] = useState(false);
   const [qty, setQty] = useState(1);
 
@@ -41,6 +43,11 @@ function ProductCard({ product, lang }) {
 
   const handleWishlist = () => {
     requireAuth(() => toggle(product.id));
+  };
+
+  const handleBuyNow = () => {
+    if (outOfStock) return;
+    requireAuth(() => { addItem(product, qty); navigate("/checkout"); });
   };
 
   return (
@@ -147,6 +154,13 @@ function ProductCard({ product, lang }) {
               <ShoppingCart size={16} /> Add to Cart
             </>
           )}
+        </button>
+        <button
+          onClick={handleBuyNow}
+          disabled={outOfStock}
+          className="mt-2 w-full rounded-lg border border-[#0f2742] py-2 text-sm font-semibold text-[#0f2742] transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {t("buyNow", "Buy Now")}
         </button>
       </div>
     </div>

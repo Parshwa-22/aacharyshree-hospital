@@ -65,5 +65,6 @@
   "address": "Our Address",
   "hospitalName": "Aacharyashree Hospital",
   "addressLine1": "Near Main Road, Kolhapur",
-  "addressLine2": "Maharashtra, India - 416001"
+  "addressLine2": "Maharashtra, India - 416001",
+  "eventsTitle": "Events", "eventsSubtitle": "Join our upcoming programmes and celebrations.", "newEvent": "New Event", "noEvents": "No events published yet.", "guest": "Guest", "videosAvailable": "videos available", "galleryTitle": "Photo Gallery", "noGallery": "No gallery sections published yet.", "buyNow": "Buy Now", "viewMore": "View More"
 }

@@ -49,6 +49,9 @@ public class NavItemServiceImpl implements NavItemService {
 
     @Override
     public NavItem create(NavItem navItem) {
+        if (navItem.getLocation() == null) {
+            navItem.setLocation(NavItem.Location.NAVBAR);
+        }
         if (navItem.getDisplayOrder() == null) {
             navItem.setDisplayOrder((int) repository.count());
         }
@@ -60,7 +63,9 @@ public class NavItemServiceImpl implements NavItemService {
         NavItem existing = getById(id);
         existing.setLabel(incoming.getLabel());
         existing.setPath(incoming.getPath());
-        existing.setLocation(incoming.getLocation());
+        if (incoming.getLocation() != null) {
+            existing.setLocation(incoming.getLocation());
+        }
         if (incoming.getOpenInNewTab() != null) {
             existing.setOpenInNewTab(incoming.getOpenInNewTab());
         }

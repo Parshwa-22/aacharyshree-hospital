@@ -15,6 +15,8 @@ import NavItems from "./pages/NavItems";
 import TrustInfo from "./pages/TrustInfo";
 import SiteSettings from "./pages/SiteSettings";
 import ContactSettings from "./pages/ContactSettings";
+import Events from "./pages/Events";
+import Gallery from "./pages/Gallery";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
@@ -37,6 +39,8 @@ export default function App() {
       <Route path="/trust-info" element={<ProtectedRoute><TrustInfo /></ProtectedRoute>} />
       <Route path="/site-settings" element={<ProtectedRoute><SiteSettings /></ProtectedRoute>} />
       <Route path="/contact-settings" element={<ProtectedRoute><ContactSettings /></ProtectedRoute>} />
+      <Route path="/events" element={<ProtectedRoute><Events /></ProtectedRoute>} />
+      <Route path="/gallery" element={<ProtectedRoute><Gallery /></ProtectedRoute>} />
     </Routes>
   );
 }

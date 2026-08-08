@@ -8,11 +8,13 @@ import { useWishlist } from "../../context/WishlistContext";
 import { useCart } from "../../context/CartContext";
 import { useTranslation } from "react-i18next";
 import { getTranslated } from "../../utils/translate";
+import { useCustomerAuth } from "../../context/CustomerAuthContext";
 
 export default function Wishlist() {
   const { i18n } = useTranslation();
   const { productIds, toggle } = useWishlist();
   const { addItem } = useCart();
+  const { requireAuth } = useCustomerAuth();
   const [products, setProducts] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
@@ -66,7 +68,7 @@ export default function Wishlist() {
                     <p className="text-sm text-slate-500">{product.price != null ? `₹${product.price}` : ""}</p>
                   </div>
                   <button
-                    onClick={() => addItem(product)}
+                    onClick={() => requireAuth(() => addItem(product))}
                     className="p-2 rounded-full bg-[#26AFDE] text-white hover:opacity-90"
                     aria-label="Add to cart"
                   >

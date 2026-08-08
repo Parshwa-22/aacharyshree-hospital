@@ -129,7 +129,7 @@ export default function DepartmentDetail() {
 
           {services.length > 0 && (
             <>
-              <h2 className="mt-10 text-2xl font-semibold text-[#0f2742]">
+              <h2 id="services" className="mt-10 text-2xl font-semibold text-[#0f2742]">
                 Services under {deptTitle}
               </h2>
               <div className="mt-6 grid sm:grid-cols-2 gap-4">
@@ -178,14 +178,6 @@ export default function DepartmentDetail() {
             </>
           )}
 
-          <div className="mt-12">
-            <Link
-              to="/contact"
-              className="inline-flex items-center gap-2 rounded-md bg-[#4DA3F7] px-8 py-4 font-semibold text-white transition-all duration-300 hover:bg-[#1565C0]"
-            >
-              Book an Appointment
-            </Link>
-          </div>
         </section>
 
         <Accessibility />

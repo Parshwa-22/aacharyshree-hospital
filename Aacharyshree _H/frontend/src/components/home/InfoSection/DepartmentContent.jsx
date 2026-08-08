@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function DepartmentContent({ department }) {
+  const { t } = useTranslation();
   return (
     <>
       {/* ====================== DESKTOP ====================== */}
@@ -89,7 +91,7 @@ export default function DepartmentContent({ department }) {
               to={`/departments/${department.slug}`}
               className="group mt-14 inline-flex items-center gap-3 rounded-md bg-[#4DA3F7] px-8 py-4 font-semibold text-white transition-all duration-300 hover:bg-[#1565C0]"
             >
-              View All
+              {t("viewMore", "View More")}
 
               <ArrowRight
                 size={18}
@@ -158,7 +160,7 @@ export default function DepartmentContent({ department }) {
             to={`/departments/${department.slug}`}
             className="mt-8 inline-flex items-center gap-2 rounded-lg bg-[#4DA3F7] px-6 py-3 font-semibold text-white transition hover:bg-[#1565C0]"
           >
-            View All
+            {t("viewMore", "View More")}
 
             <ArrowRight size={16} />
 

@@ -22,6 +22,8 @@ export const fetchHeroSlides = () => safeGet("/api/hero", { active: true });
 export const fetchDonors = () => safeGet("/api/donors", { active: true });
 export const fetchNavItems = (location) => safeGet("/api/nav-items", { location, active: true });
 export const fetchDepartments = () => safeGet("/api/departments", { active: true });
+export const fetchEvents = () => safeGet("/api/events", { active: true });
+export const fetchGallery = () => safeGet("/api/gallery", { active: true });
 
 export async function fetchSiteSettings() {
   try {
