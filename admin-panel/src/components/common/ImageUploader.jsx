@@ -14,7 +14,10 @@ export default function ImageUploader({ label, value, onChange, accept = "image/
 
   const handleFile = async (file) => {
     if (!file) return;
+    const submitButton = inputRef.current?.form?.querySelector('button[type="submit"], button:not([type])');
+    const wasSubmitDisabled = submitButton?.disabled;
     setUploading(true);
+    if (submitButton) submitButton.disabled = true;
     setError("");
     const preview = URL.createObjectURL(file);
     setLocalPreview(preview);
@@ -29,6 +32,7 @@ export default function ImageUploader({ label, value, onChange, accept = "image/
       setError(err.response?.data?.message || "Upload failed");
     } finally {
       setUploading(false);
+      if (submitButton) submitButton.disabled = wasSubmitDisabled;
       URL.revokeObjectURL(preview);
       setLocalPreview("");
     }
