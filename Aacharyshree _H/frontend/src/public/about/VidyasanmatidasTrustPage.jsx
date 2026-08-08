@@ -569,6 +569,10 @@ export default function VidyasanmatidasTrustPage() {
       {main === "chikitsalaya" && <ChikitsalayaSection />}
       {main === "academy" && <AcademySection />}
 
+      <div className="vsd-motto" aria-label="Trust motto">
+        अहिंसा से सुख, त्याग से शांति। मैत्री से प्रगती, ध्यान से सिद्धी।।
+      </div>
+
     </div>
   );
 }
@@ -609,12 +613,19 @@ const CSS = `
   color: #fff; border-color: transparent; background: linear-gradient(90deg, var(--teal), var(--blue));
   box-shadow: 0 6px 16px rgba(47,184,201,.24); transform: translateY(-1px);
 }
+.vsd-motto {
+  max-width: 980px; margin: 26px auto 34px; padding: 18px 22px; text-align: center;
+  color: var(--navy); font-weight: 700; letter-spacing: .02em;
+  background: linear-gradient(135deg, rgba(143,224,211,.22), rgba(124,201,232,.24));
+  border: 1px solid rgba(47,184,201,.22); border-radius: 16px;
+}
 @media (max-width: 700px) {
   .vsd-org-selector { margin: 12px 14px 0; padding: 14px 12px; }
   .vsd-brand { text-align: center; font-size: .95rem; margin-bottom: 8px; }
   .vsd-org-caption { text-align: center; }
   .vsd-org-options { grid-template-columns: 1fr; gap: 8px; }
   .vsd-org-options button { font-size: .82rem; padding: 10px; }
+  .vsd-motto { margin: 20px 14px 28px; padding: 14px 12px; font-size: .84rem; }
 }
 
 .vsd-hero { width: 100%; background: var(--white); display:flex; justify-content:center; }
