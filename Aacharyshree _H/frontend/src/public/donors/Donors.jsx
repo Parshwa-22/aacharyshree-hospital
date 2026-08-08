@@ -33,6 +33,20 @@ export default function Donors() {
     };
   }, []);
 
+  const vipDonors = donors.filter((donor) => donor.vip);
+  const regularDonors = donors.filter((donor) => !donor.vip);
+  const renderDonor = (donor) => (
+    <div key={donor.id} className="min-w-0 h-full bg-[#F8FAFD] rounded-2xl p-6 flex flex-col items-center text-center shadow-sm hover:shadow-md transition">
+      <div className={`${donor.vip ? "aspect-[4/3] w-full rounded-xl" : "h-24 w-24 rounded-full"} bg-white shadow flex items-center justify-center mb-4 overflow-hidden`}>
+        {donor.image ? <img src={donor.image} alt={donor.name} className={`${donor.vip ? "h-full w-full" : "h-16 w-16"} object-cover object-center`} /> : <BrandLogo className={`${donor.vip ? "h-full w-full" : "h-16 w-16"}`} alt={donor.name} />}
+      </div>
+      <h3 className="min-h-[1.5rem] max-w-full break-words line-clamp-2 font-semibold text-[#0f2742]">{donor.name}</h3>
+      {donor.donationAmount != null && <p className="mt-1 text-lg font-bold text-[#26AFDE]">{donor.donationAmount.toLocaleString("en-IN")}</p>}
+      {donor.donationType && <p className="mt-1 text-sm text-slate-500">{getTranslated(donor, "donationType", i18n.language)}</p>}
+      {donor.message && <p className="mt-2 text-xs italic text-slate-400">"{getTranslated(donor, "message", i18n.language)}"</p>}
+    </div>
+  );
+
   return (
     <>
       <Navbar />
@@ -64,7 +78,25 @@ export default function Donors() {
               Donor listings will appear here once added in the admin panel.
             </p>
           ) : (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <>
+              {vipDonors.length > 0 && (
+                <div>
+                  <h2 className="mb-5 text-center text-xl font-semibold text-[#0f2742]">VIP Donors</h2>
+                  <div className={`mx-auto grid gap-6 ${vipDonors.length === 1 ? "max-w-xl grid-cols-1" : vipDonors.length === 2 || vipDonors.length === 4 ? "max-w-4xl grid-cols-1 sm:grid-cols-2" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"}`}>
+                    {vipDonors.map(renderDonor)}
+                  </div>
+                </div>
+              )}
+              {regularDonors.length > 0 && (
+                <div>
+                  {vipDonors.length > 0 && <h2 className="mb-5 text-center text-xl font-semibold text-[#0f2742]">Supporting Donors</h2>}
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {regularDonors.map(renderDonor)}
+                  </div>
+                </div>
+              )}
+            {false && (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[...donors].sort((a, b) => Number(!!b.vip) - Number(!!a.vip)).map((donor) => (
                 <div
                   key={donor.id}
@@ -92,6 +124,8 @@ export default function Donors() {
                 </div>
               ))}
             </div>
+            )}
+            </>
           )}
         </section>
 

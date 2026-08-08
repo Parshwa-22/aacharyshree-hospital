@@ -139,7 +139,7 @@ const DoctorsPage = ({ doctors }) => {
                     <img
                       src={doc.image}
                       alt={doc.name}
-                      className="block h-full w-full object-cover object-center"
+                      className="block h-full w-full object-contain object-center"
                     />
 
                     {/* NAME STRIP */}
