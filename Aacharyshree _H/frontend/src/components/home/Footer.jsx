@@ -41,7 +41,15 @@ export default function Footer() {
 
           {/* LOGO + ABOUT */}
           <div>
-            <BrandLogo className="w-[160px] h-20 mb-4" />
+            <div className="mb-5 inline-flex items-center gap-3 rounded-2xl border border-white/15 bg-white/[0.06] px-3 py-2.5 shadow-lg">
+              <span className="flex h-[68px] w-[68px] shrink-0 items-center justify-center overflow-hidden rounded-xl bg-white p-1.5 shadow-md">
+                <BrandLogo className="h-full w-full" />
+              </span>
+              <span className="pr-2 text-sm font-semibold leading-tight tracking-wide text-white">
+                Aacharyashree<br />
+                <span className="font-normal text-[#A0DCDF]">Chikitsalay</span>
+              </span>
+            </div>
             <p className="text-sm text-gray-400 leading-relaxed">
               {t(
                 "footerAbout",
