@@ -158,13 +158,13 @@ const Navbar = () => {
 
       <div
         className={`
-          md:hidden fixed top-0 left-0 h-full w-[75%]
+          mobile-nav-drawer md:hidden fixed top-0 left-0 h-full w-[75%]
           bg-[#A0DCDF] bg-gradient-to-b from-white via-[#47C5B9] to-[#26AFDE] opacity-100
           backdrop-blur-none shadow-2xl border-r border-white/40
-          transform transition-transform duration-300 z-[60]
+          transform transition-transform duration-300 z-[100]
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
         `}
-        style={{ backgroundColor: "#A0DCDF", opacity: 1 }}
+        style={{ background: "linear-gradient(180deg, #ffffff 0%, #47C5B9 48%, #26AFDE 100%)", opacity: 1, zIndex: 100 }}
       >
         <div className="p-6 flex flex-col gap-6 text-[#0f2742] font-semibold text-lg">
 
@@ -233,7 +233,7 @@ const Navbar = () => {
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/40 md:hidden"
+          className="mobile-nav-overlay fixed inset-0 z-[90] bg-black/45 md:hidden"
           onClick={() => setIsOpen(false)}
         />
       )}

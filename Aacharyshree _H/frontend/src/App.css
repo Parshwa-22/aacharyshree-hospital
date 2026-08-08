@@ -182,3 +182,6 @@
     border-right-color: var(--border);
   }
 }
+/* The mobile navigation must remain a solid, top-layer drawer over page content. */
+.mobile-nav-drawer { background: linear-gradient(180deg, #ffffff 0%, #47C5B9 48%, #26AFDE 100%) !important; opacity: 1 !important; z-index: 100 !important; }
+.mobile-nav-overlay { z-index: 90 !important; }
