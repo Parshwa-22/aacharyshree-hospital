@@ -22,7 +22,13 @@ public class MonkController {
     @GetMapping public List<Monk> list(@RequestParam(required = false) Boolean active) {
         return repository.findAll().stream().filter(m -> active == null || !active || Boolean.TRUE.equals(m.getIsActive())).toList();
     }
-    @PostMapping public Monk create(@Valid @RequestBody Monk monk) { return repository.save(monk); }
+    @PostMapping public Monk create(@Valid @RequestBody Monk monk) {
+        if ((monk.getLatitude() == null || monk.getLongitude() == null) && monk.getLocationLink() != null) {
+            Matcher matcher = COORDINATES.matcher(monk.getLocationLink());
+            if (matcher.find()) { monk.setLatitude(Double.valueOf(matcher.group(1))); monk.setLongitude(Double.valueOf(matcher.group(2))); }
+        }
+        return repository.save(monk);
+    }
     @PutMapping("/{id}") public ResponseEntity<Monk> update(@PathVariable Long id, @Valid @RequestBody Monk input) {
         return repository.findById(id).map(m -> {
             m.setName(input.getName()); m.setGroupName(input.getGroupName()); m.setPhoto(input.getPhoto()); m.setTravelReason(input.getTravelReason());
