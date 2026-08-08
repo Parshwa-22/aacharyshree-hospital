@@ -29,7 +29,7 @@ export default function DepartmentImage({
       <img
         src={image}
         alt={title}
-        className="block h-full w-full max-w-full object-cover object-center"
+      className="block h-full w-full max-w-full object-contain object-center bg-[#0f2742]"
       />
 
       {/* ================= DARK OVERLAY ================= */}

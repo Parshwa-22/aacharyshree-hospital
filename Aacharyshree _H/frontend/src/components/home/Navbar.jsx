@@ -37,8 +37,7 @@ const Navbar = () => {
 
     fetchNavItems("NAVBAR").then((data) => {
       if (cancelled) return;
-      const monkLink = { id: "monk-live-location", label: "Monk Live Location", path: "/monks", openInNewTab: false };
-      setNavItems(data.some((item) => item.path === "/monks") ? data : [...data, monkLink]);
+      setNavItems(data);
     });
 
     return () => {

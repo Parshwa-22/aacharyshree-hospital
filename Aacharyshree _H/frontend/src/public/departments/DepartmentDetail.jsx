@@ -106,11 +106,11 @@ export default function DepartmentDetail() {
       <Navbar />
 
       <main className="bg-white">
-        <section className="relative h-[300px] md:h-[420px] flex items-end">
+        <section className="relative h-[300px] w-full overflow-hidden bg-[#0f2742] md:h-[420px] flex items-end">
           <img
             src={department.image}
             alt={deptTitle}
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 h-full w-full object-contain object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/10" />
 
@@ -148,16 +148,18 @@ export default function DepartmentDetail() {
               <h2 className="mt-14 text-2xl font-semibold text-[#0f2742]">
                 Doctors in {deptTitle}
               </h2>
-              <div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="mt-6 grid grid-cols-1 items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {doctors.map((doc) => (
                   <div
                     key={doc.id}
-                    className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden"
+                    className="flex h-full min-w-0 flex-col overflow-hidden rounded-2xl bg-white shadow-md transition duration-300 hover:shadow-xl"
                   >
-                    <img src={doc.image} alt={doc.name} className="w-full h-48 object-cover" />
-                    <div className="p-4 text-center">
-                      <p className="font-semibold text-[#0f2742]">{doc.name}</p>
-                      <p className="text-sm text-slate-500 mt-0.5">
+                    <div className="aspect-[4/3] w-full overflow-hidden bg-slate-50">
+                      <img src={doc.image} alt={doc.name} className="block h-full w-full object-contain object-center" />
+                    </div>
+                    <div className="flex flex-1 flex-col p-4 text-center">
+                      <p className="min-h-[1.5rem] break-words line-clamp-2 font-semibold text-[#0f2742]">{doc.name}</p>
+                      <p className="mt-1 min-h-[2.5rem] break-words line-clamp-2 text-sm text-slate-500">
                         {getTranslated(doc, "specialization", i18n.language)}
                       </p>
                       <div className="mt-2 flex justify-center">
