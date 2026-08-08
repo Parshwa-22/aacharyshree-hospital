@@ -551,10 +551,10 @@ export default function VidyasanmatidasTrustPage() {
     <div className="vsd-root">
       <style>{CSS}</style>
 
-      <div className="vsd-trust-switcher" aria-label="Trust sections">
+      <div className="vsd-org-selector" aria-label="Related organisations">
         <div className="vsd-brand">विद्यासन्मतीदास सेवा संस्था</div>
-        <div className="vsd-navlinks">
-          <button className={main === "home" ? "active" : ""} onClick={() => setMain("home")}>होम</button>
+        <p className="vsd-org-caption">हमारी सहयोगी संस्थाओं के बारे में जानें</p>
+        <div className="vsd-org-options">
           <button className={main === "chikitsalaya" ? "active" : ""} onClick={() => setMain("chikitsalaya")}>आचार्य चिकित्सालय</button>
           <button className={main === "academy" ? "active" : ""} onClick={() => setMain("academy")}>वीराचार्य अकादमी</button>
         </div>
@@ -569,9 +569,6 @@ export default function VidyasanmatidasTrustPage() {
       {main === "chikitsalaya" && <ChikitsalayaSection />}
       {main === "academy" && <AcademySection />}
 
-      <footer className="vsd-footer">
-        <p>अहिंसा से सुख, त्याग से शांति। मैत्री से प्रगती, ध्यान से सिद्धी।।</p>
-      </footer>
     </div>
   );
 }
@@ -594,34 +591,30 @@ const CSS = `
   color: var(--ink);
   min-height: 100vh;
 }
-.vsd-topnav {
-  position: sticky; top: 0; z-index: 40;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 28px;
-  background: linear-gradient(90deg, #ffffff 0%, var(--teal-light) 45%, var(--sky) 100%);
-  box-shadow: 0 2px 14px rgba(24,73,113,0.15);
-}
-.vsd-trust-switcher {
-  display: flex; align-items: center; justify-content: space-between; gap: 18px;
-  max-width: 980px; margin: 22px auto 0; padding: 14px 18px;
-  background: rgba(255,255,255,.92); border: 1px solid rgba(47,184,201,.25);
-  border-radius: 18px; box-shadow: 0 8px 24px rgba(24,73,113,.10);
+.vsd-org-selector {
+  max-width: 980px; margin: 22px auto 0; padding: 18px 20px;
+  background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(239,249,251,.96));
+  border: 1px solid rgba(47,184,201,.25); border-radius: 20px;
+  box-shadow: 0 10px 28px rgba(24,73,113,.10);
 }
 .vsd-brand { color: var(--navy); font-weight: 700; font-size: 1.05rem; letter-spacing: .02em; }
-.vsd-navlinks { display: flex; gap: 4px; }
-.vsd-navlinks button {
-  background: none; border: none; border-bottom: 2px solid transparent;
-  color: var(--ink); padding: 8px 14px; cursor: pointer;
-  font-size: .92rem; font-weight: 600; transition: all .25s ease;
+.vsd-org-caption { margin: 4px 0 14px; color: #64748b; font-size: .86rem; }
+.vsd-org-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.vsd-org-options button {
+  border: 1px solid rgba(47,184,201,.35); border-radius: 12px; color: var(--navy);
+  background: #fff; padding: 12px 14px; cursor: pointer; font-size: .92rem;
+  font-weight: 700; text-align: center; transition: all .25s ease;
 }
-.vsd-navlinks button:hover { color: var(--navy); }
-.vsd-navlinks button.active { color: var(--navy); border-bottom-color: var(--navy); }
+.vsd-org-options button:hover, .vsd-org-options button.active {
+  color: #fff; border-color: transparent; background: linear-gradient(90deg, var(--teal), var(--blue));
+  box-shadow: 0 6px 16px rgba(47,184,201,.24); transform: translateY(-1px);
+}
 @media (max-width: 700px) {
-  .vsd-trust-switcher { display: block; margin: 12px 14px 0; padding: 12px 10px; }
-  .vsd-topnav { display: block; padding: 12px 14px; }
+  .vsd-org-selector { margin: 12px 14px 0; padding: 14px 12px; }
   .vsd-brand { text-align: center; font-size: .95rem; margin-bottom: 8px; }
-  .vsd-navlinks { justify-content: center; overflow-x: auto; gap: 2px; }
-  .vsd-navlinks button { white-space: nowrap; font-size: .78rem; padding: 7px 9px; }
+  .vsd-org-caption { text-align: center; }
+  .vsd-org-options { grid-template-columns: 1fr; gap: 8px; }
+  .vsd-org-options button { font-size: .82rem; padding: 10px; }
 }
 
 .vsd-hero { width: 100%; background: var(--white); display:flex; justify-content:center; }
