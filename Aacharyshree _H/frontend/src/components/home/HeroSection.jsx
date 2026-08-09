@@ -57,7 +57,7 @@ const Hero = () => {
   const heroSubtitle = getTranslated(siteSettings, "heroSubtitle", i18n.language);
 
   return (
-    <section className="relative w-full min-h-[70vh] sm:min-h-[80vh] md:min-h-[90vh] overflow-hidden bg-[#0f2742]">
+    <section className="relative h-[400px] min-h-0 w-full overflow-hidden bg-[#0f2742] sm:h-auto sm:min-h-[80vh] md:min-h-[90vh]">
       {/* BACKGROUND MEDIA */}
       <div key={slide.id} className={`absolute inset-0 ${animClass}`}>
         {slide.type === "VIDEO" && slide.videoUrl ? (
