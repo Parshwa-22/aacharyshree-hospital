@@ -33,8 +33,8 @@ INSERT INTO departments (title, slug, image, description, services, display_orde
    'Joint Replacement,Sports Medicine,Trauma Care,Spine Surgery', 2, 1, NOW(), NOW());
 
 -- ---------- Site settings (homepage hero heading) ----------
-INSERT INTO site_settings (id, hero_title, hero_subtitle, updated_at)
-VALUES (1, 'Welcome to Aacharyshree Hospital', 'Your Health, Our Priority', NOW())
+INSERT INTO site_settings (id, hero_title, hero_subtitle, opening_status, updated_at)
+VALUES (1, 'Welcome to Aacharyshree Hospital', 'Your Health, Our Priority', 'CLOSED', NOW())
 ON DUPLICATE KEY UPDATE hero_title = hero_title;
 
 -- ---------- Trust info (About page) ----------

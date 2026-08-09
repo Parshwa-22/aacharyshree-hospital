@@ -36,6 +36,11 @@ export async function fetchSiteSettings() {
   }
 }
 
+export async function openInauguration() {
+  const { data } = await apiClient.post("/api/site-settings/open-inauguration");
+  return data;
+}
+
 export async function fetchContactSettings() {
   try {
     const { data } = await apiClient.get("/api/contact-settings");

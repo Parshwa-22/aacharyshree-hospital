@@ -21,4 +21,13 @@ public class SiteSettingsController {
     public SiteSettings update(@RequestBody SiteSettings settings) {
         return service.update(settings);
     }
+
+    /**
+     * The public curtain can be opened by the first visitor. This action is
+     * deliberately idempotent so concurrent clicks/retries remain safe.
+     */
+    @PostMapping("/open-inauguration")
+    public SiteSettings openInauguration() {
+        return service.openInauguration();
+    }
 }

@@ -19,6 +19,7 @@ public class SiteSettingsServiceImpl implements SiteSettingsService {
             fresh.setId(1L);
             fresh.setHeroTitle("Welcome to Aacharyshree Hospital");
             fresh.setHeroSubtitle("Your Health, Our Priority");
+            fresh.setOpeningStatus(SiteSettings.OpeningStatus.CLOSED);
             return repository.save(fresh);
         });
     }
@@ -29,6 +30,19 @@ public class SiteSettingsServiceImpl implements SiteSettingsService {
         existing.setHeroTitle(incoming.getHeroTitle());
         existing.setHeroSubtitle(incoming.getHeroSubtitle());
         existing.setTranslations(incoming.getTranslations());
+        existing.setOpeningStatus(incoming.getOpeningStatus() == null
+            ? SiteSettings.OpeningStatus.CLOSED
+            : incoming.getOpeningStatus());
         return repository.save(existing);
+    }
+
+    @Override
+    public SiteSettings openInauguration() {
+        SiteSettings existing = get();
+        if (existing.getOpeningStatus() != SiteSettings.OpeningStatus.OPEN) {
+            existing.setOpeningStatus(SiteSettings.OpeningStatus.OPEN);
+            return repository.save(existing);
+        }
+        return existing;
     }
 }

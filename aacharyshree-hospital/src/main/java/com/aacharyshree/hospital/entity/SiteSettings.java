@@ -27,6 +27,11 @@ public class SiteSettings {
     private String heroTitle;
     private String heroSubtitle;
 
+    /** Controls the one-time public curtain inauguration experience. */
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 16)
+    private OpeningStatus openingStatus = OpeningStatus.CLOSED;
+
     // Per-language override for heroTitle/heroSubtitle —
     // {"hi":{"heroTitle":"...","heroSubtitle":"..."}, "mr":{...}, "kn":{...}}
     @Column(columnDefinition = "TEXT")
@@ -34,4 +39,8 @@ public class SiteSettings {
 
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    public enum OpeningStatus {
+        OPEN, CLOSED
+    }
 }

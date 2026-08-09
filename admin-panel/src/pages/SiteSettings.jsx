@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Loader2, Save } from "lucide-react";
+import { Loader2, Save, Theater } from "lucide-react";
 import apiClient from "../api/client";
 import TranslationsEditor from "../components/common/TranslationsEditor";
 
 export default function SiteSettings() {
-  const [values, setValues] = useState({ heroTitle: "", heroSubtitle: "", translations: "" });
+  const [values, setValues] = useState({ heroTitle: "", heroSubtitle: "", translations: "", openingStatus: "CLOSED" });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
@@ -18,6 +18,7 @@ export default function SiteSettings() {
           heroTitle: data.heroTitle || "",
           heroSubtitle: data.heroSubtitle || "",
           translations: data.translations || "",
+          openingStatus: data.openingStatus || "CLOSED",
         })
       )
       .catch(() => setError("Failed to load site settings"))
@@ -61,6 +62,24 @@ export default function SiteSettings() {
               onChange={(e) => setValues((v) => ({ ...v, heroTitle: e.target.value }))}
               placeholder="Welcome to Aacharyshree Hospital"
             />
+          </div>
+
+          <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
+            <div className="flex items-start gap-3">
+              <Theater size={19} className="mt-0.5 shrink-0 text-amber-700" />
+              <div className="min-w-0">
+                <label className="block text-sm font-semibold text-amber-950">Website inauguration curtain</label>
+                <p className="mt-1 text-xs leading-5 text-amber-900">Set to Closed to show the theatre curtain on the next website load. When a visitor enters, it automatically changes to Open. Set it back to Closed any time to test it again.</p>
+                <select
+                  className="mt-3 w-full rounded-md border border-amber-300 bg-white px-3 py-2 text-sm text-slate-800"
+                  value={values.openingStatus}
+                  onChange={(e) => setValues((v) => ({ ...v, openingStatus: e.target.value }))}
+                >
+                  <option value="CLOSED">CLOSED — show curtain</option>
+                  <option value="OPEN">OPEN — load website directly</option>
+                </select>
+              </div>
+            </div>
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-1">Homepage Subtitle</label>

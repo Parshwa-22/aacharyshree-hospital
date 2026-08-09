@@ -91,6 +91,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/api/nav-items/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/departments/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/site-settings/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/site-settings/open-inauguration").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/trust-info/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/contact-settings/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/counters/**").permitAll()

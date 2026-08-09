@@ -114,6 +114,7 @@ replacing the old hardcoded "Patients Treated / Doctors / Rooms" trio).
 |---|---|---|---|
 | GET | `/api/site-settings` | Public | Sitewide homepage hero title/subtitle |
 | PUT | `/api/site-settings` | Admin | Update it |
+| POST | `/api/site-settings/open-inauguration` | Public | Changes the theatre-opening status from `CLOSED` to `OPEN` after a visitor enters |
 | GET | `/api/trust-info` | Public | The governing trust's About-page content |
 | PUT | `/api/trust-info` | Admin | Update it |
 
@@ -165,6 +166,11 @@ to both the navbar and footer, three starter departments, and default
 homepage hero text — all editable afterwards from the admin panel.
 
 ## 7. If you're upgrading from an earlier version of this backend
+
+Before deploying this version with `DB_DDL_AUTO=validate`, run
+`scripts/migrations/20260809_add_site_settings_opening_status.sql` once. It adds the
+database-backed `OPEN` / `CLOSED` status used by the public theatre curtain and the
+admin Site Settings screen.
 
 A few fields changed shape in this update:
 - `Donor.purpose` was removed (merged into `donationType`)
