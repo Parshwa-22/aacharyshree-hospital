@@ -40,9 +40,12 @@ export default function Gallery() {
         <div className="mt-7 grid gap-8 sm:mt-10 sm:gap-10">
           {sections.map((section) => <section key={section.id}>
             <h2 className="mb-4 text-xl font-semibold text-[#0f2742] sm:text-2xl">{section.title}</h2>
-            <Swiper spaceBetween={18} slidesPerView={1} breakpoints={{ 640: { slidesPerView: 2.2 }, 1024: { slidesPerView: 3.2 } }}>
+            <div className="grid gap-4 sm:hidden">
+              {json(section.photos).map((src, i) => <img key={i} src={mediaUrl(src)} alt={section.title} className="block h-52 w-full rounded-2xl object-cover shadow" />)}
+            </div>
+            <Swiper className="hidden sm:block" spaceBetween={18} slidesPerView={2.2} breakpoints={{ 1024: { slidesPerView: 3.2 } }}>
               {json(section.photos).map((src, i) => <SwiperSlide key={i}>
-                <img src={mediaUrl(src)} alt={section.title} className="h-52 w-full rounded-2xl object-cover shadow sm:h-64" />
+                <img src={mediaUrl(src)} alt={section.title} className="h-64 w-full rounded-2xl object-cover shadow" />
               </SwiperSlide>)}
             </Swiper>
           </section>)}

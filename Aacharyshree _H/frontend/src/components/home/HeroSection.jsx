@@ -85,7 +85,7 @@ const Hero = () => {
       {/* SITEWIDE TITLE/SUBTITLE — positioned toward the lower half so it
           never visually collides with the fixed navbar above it. */}
       {(heroTitle || heroSubtitle) && (
-        <div className="relative z-10 flex flex-col justify-end items-center text-center h-full px-6 sm:px-10 md:px-20 pb-16 sm:pb-20 md:pb-24">
+        <div className="relative z-10 flex h-full flex-col items-center justify-start px-6 pt-28 text-center sm:justify-end sm:px-10 sm:pt-0 sm:pb-20 md:px-20 md:pb-24">
           <div className="max-w-[900px]">
             {heroTitle && (
               <h1 className="text-white font-extrabold leading-tight text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3">
