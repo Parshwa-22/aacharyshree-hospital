@@ -36,20 +36,6 @@ export default function DepartmentImage({
 
       <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-black/20 to-black/55" />
 
-     {/* ================= BLUE SLANTED STRIP ================= */}
-
-<div
-  className="
-    absolute
-    -bottom-8
-    left-0
-    h-28
-    w-[120%]
-    -rotate-6
-    bg-[#184A73]
-  "
-/>
-
 {/* ================= Department Name ================= */}
 
 <div
