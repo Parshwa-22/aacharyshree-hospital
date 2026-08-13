@@ -38,5 +38,5 @@ export function doctorAvailability(doctor, now = new Date()) {
   const detail = isMonthly ? formatMonthlyDays(doctor.availableDaysOfMonth) : "Regular consultation schedule";
   return scheduledToday
     ? { available: true, label: "Available today", detail, tone: "emerald" }
-    : { available: false, label: "Available on selected days", detail, tone: "slate" };
+    : { available: false, label: "Next available by schedule", detail, tone: "slate" };
 }
