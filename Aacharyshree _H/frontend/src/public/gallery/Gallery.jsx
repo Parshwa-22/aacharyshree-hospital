@@ -31,7 +31,7 @@ const galleryUrl = (value) => {
 function GalleryPhoto({ src, title, className = "" }) {
   const url = galleryUrl(src);
   return (
-    <div className={`relative h-64 w-full overflow-hidden rounded-2xl bg-slate-100 ${className}`}>
+    <div className={`relative w-full overflow-hidden rounded-2xl bg-slate-100 ${className}`}>
       <img
         src={url}
         alt={title}
@@ -47,10 +47,10 @@ function GalleryPhoto({ src, title, className = "" }) {
 export default function Gallery() {
   const { t, i18n } = useTranslation();
   const [sections, setSections] = useState([]);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches);
 
   useEffect(() => {
-    const query = window.matchMedia("(max-width: 639px)");
+    const query = window.matchMedia("(max-width: 767px)");
     const update = () => setIsMobile(query.matches);
     update();
     query.addEventListener?.("change", update);
@@ -74,11 +74,11 @@ export default function Gallery() {
             <h2 className="mb-4 text-xl font-semibold text-[#0f2742] sm:text-2xl">{section.title}</h2>
             {isMobile ? (
               <div className="flex w-full snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-2 [scrollbar-width:thin]">
-                {json(section.photos).map((src, i) => <div key={i} className="w-full min-w-full shrink-0 snap-center"><GalleryPhoto src={src} title={section.title} className="h-[min(70vw,22rem)]" /></div>)}
+                {json(section.photos).map((src, i) => <div key={i} className="h-[min(70vw,22rem)] w-full min-w-full shrink-0 snap-center"><GalleryPhoto src={src} title={section.title} className="h-full" /></div>)}
               </div>
             ) : (
               <Swiper className="w-full" spaceBetween={18} slidesPerView={2.2} breakpoints={{ 1024: { slidesPerView: 3.2 } }}>
-                {json(section.photos).map((src, i) => <SwiperSlide key={i}><GalleryPhoto src={src} title={section.title} /></SwiperSlide>)}
+                {json(section.photos).map((src, i) => <SwiperSlide key={i}><GalleryPhoto src={src} title={section.title} className="h-64" /></SwiperSlide>)}
               </Swiper>
             )}
           </section>)}
