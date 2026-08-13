@@ -1,4 +1,5 @@
 const DAY_CODES = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+const DAY_ALIASES = { SUNDAY: "SUN", SUN: "SUN", MONDAY: "MON", MON: "MON", TUESDAY: "TUE", TUE: "TUE", WEDNESDAY: "WED", WED: "WED", THURSDAY: "THU", THU: "THU", FRIDAY: "FRI", FRI: "FRI", SATURDAY: "SAT", SAT: "SAT" };
 
 function minutes(value) {
   if (!value || !/^\d{2}:\d{2}$/.test(value)) return null;
@@ -28,9 +29,12 @@ export function doctorAvailability(doctor, now = new Date()) {
   const isMonthly = doctor.availabilityType === "MONTHLY_DAYS";
   const hasExplicitSchedule = isMonthly ? Boolean(doctor.availableDaysOfMonth) : Boolean(doctor.availableDays);
   if (!hasExplicitSchedule) return { available: false, label: "", detail: "", tone: "slate" };
+  const indiaParts = new Intl.DateTimeFormat("en-US", { weekday: "short", day: "numeric", timeZone: "Asia/Kolkata" }).formatToParts(now);
+  const indiaWeekday = (indiaParts.find((part) => part.type === "weekday")?.value || "").toUpperCase().slice(0, 3);
+  const indiaDay = Number(indiaParts.find((part) => part.type === "day")?.value);
   const scheduledToday = isMonthly
-    ? (doctor.availableDaysOfMonth || "").split(",").map(Number).includes(now.getDate())
-    : !doctor.availableDays || doctor.availableDays.split(",").map((day) => day.trim().toUpperCase()).includes(DAY_CODES[now.getDay()]);
+    ? (doctor.availableDaysOfMonth || "").split(",").map(Number).includes(indiaDay)
+    : doctor.availableDays.split(",").map((day) => DAY_ALIASES[day.trim().toUpperCase()] || day.trim().toUpperCase()).includes(indiaWeekday);
   const detail = isMonthly ? formatMonthlyDays(doctor.availableDaysOfMonth) : "Regular consultation schedule";
   return scheduledToday
     ? { available: true, label: "Available today", detail, tone: "emerald" }
