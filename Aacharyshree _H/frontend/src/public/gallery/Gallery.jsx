@@ -38,7 +38,7 @@ function GalleryPhoto({ src, title }) {
         loading="eager"
         fetchPriority="high"
         decoding="sync"
-        className="gallery-photo !visible !block h-full w-full object-contain object-center shadow"
+        className="gallery-photo !visible !block h-full w-full object-cover object-center shadow"
       />
     </div>
   );

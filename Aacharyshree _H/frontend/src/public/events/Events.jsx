@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { CalendarDays, MapPin, Clock, Video } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import Navbar from "../../components/home/Navbar";
@@ -59,9 +59,11 @@ export default function Events() {
               <div className="grid lg:grid-cols-[minmax(280px,0.9fr)_1.1fr]">
                 {media.length ? <div className="relative w-full overflow-hidden bg-slate-100">
                   {isMobile ? (
-                    <img src={media[0]} alt={event.name} className="block h-[230px] w-full object-cover object-center" />
+                    <Swiper modules={[Autoplay, Pagination]} autoplay={{ delay: 3200, disableOnInteraction: false }} pagination={{ clickable: true }} className="h-[230px] w-full" spaceBetween={0}>
+                      {media.map((src, i) => <SwiperSlide key={i}><img src={src} alt={event.name} className="block h-full w-full object-cover object-center" /></SwiperSlide>)}
+                    </Swiper>
                   ) : (
-                    <Swiper modules={[Pagination]} pagination={{ clickable: true }} className="h-[300px] w-full lg:h-full lg:min-h-[280px]" spaceBetween={8}>
+                    <Swiper modules={[Autoplay, Pagination]} autoplay={{ delay: 3600, disableOnInteraction: false }} pagination={{ clickable: true }} className="h-[300px] w-full lg:h-full lg:min-h-[280px]" spaceBetween={8}>
                       {media.map((src, i) => <SwiperSlide key={i}>
                         <img src={src} alt={event.name} className="h-full w-full object-cover object-center" />
                       </SwiperSlide>)}
