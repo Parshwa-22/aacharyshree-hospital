@@ -4,6 +4,8 @@ import Footer from "../../components/home/Footer";
 import { fetchGallery } from "../../api/publicApi";
 import { useTranslation } from "react-i18next";
 import { getTranslated } from "../../utils/translate";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 const json = (value) => {
   if (Array.isArray(value)) return value;
@@ -45,6 +47,15 @@ function GalleryPhoto({ src, title, className = "" }) {
 export default function Gallery() {
   const { t, i18n } = useTranslation();
   const [sections, setSections] = useState([]);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 639px)");
+    const update = () => setIsMobile(query.matches);
+    update();
+    query.addEventListener?.("change", update);
+    return () => query.removeEventListener?.("change", update);
+  }, []);
 
   useEffect(() => {
     fetchGallery().then((data) => setSections(data.map((section) => ({
@@ -61,13 +72,15 @@ export default function Gallery() {
         <div className="mt-7 grid gap-8 sm:mt-10 sm:gap-10">
           {sections.map((section) => <section key={section.id}>
             <h2 className="mb-4 text-xl font-semibold text-[#0f2742] sm:text-2xl">{section.title}</h2>
-            <div className="flex w-full snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-2 [scrollbar-width:thin]">
-              {json(section.photos).map((src, i) => (
-                <div key={i} className="w-full min-w-full shrink-0 snap-center sm:min-w-[46%] lg:min-w-[31%]">
-                  <GalleryPhoto src={src} title={section.title} className="h-[min(70vw,22rem)]" />
-                </div>
-              ))}
-            </div>
+            {isMobile ? (
+              <div className="flex w-full snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-2 [scrollbar-width:thin]">
+                {json(section.photos).map((src, i) => <div key={i} className="w-full min-w-full shrink-0 snap-center"><GalleryPhoto src={src} title={section.title} className="h-[min(70vw,22rem)]" /></div>)}
+              </div>
+            ) : (
+              <Swiper className="w-full" spaceBetween={18} slidesPerView={2.2} breakpoints={{ 1024: { slidesPerView: 3.2 } }}>
+                {json(section.photos).map((src, i) => <SwiperSlide key={i}><GalleryPhoto src={src} title={section.title} /></SwiperSlide>)}
+              </Swiper>
+            )}
           </section>)}
           {sections.length === 0 && <p className="py-16 text-center text-slate-400">{t("noGallery", "No gallery sections published yet.")}</p>}
         </div>
