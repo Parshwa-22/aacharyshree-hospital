@@ -11,9 +11,12 @@ export default function DoctorProfileCard({ doctor, specialization, department, 
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-r from-[#00c6ff] to-[#00d9a5] px-4 py-2.5 text-center text-base font-bold text-white shadow-md">{doctor.name}</div>
       </div>
       <div className="flex flex-1 flex-col p-5 text-center">
-        <SpecializationText className="min-h-[2.75rem] text-[15px] leading-5 text-[#0f2742]">{specialization}</SpecializationText>
+        <div className="text-left">
+          <p className="mb-1 text-xs font-bold uppercase tracking-wide text-[#1597C2]">Specialization</p>
+          <SpecializationText className="min-h-[2.75rem] text-[15px] leading-5 text-[#0f2742]">{specialization}</SpecializationText>
+        </div>
         <div className="mt-3 space-y-2 text-left">
-          {doctor.qualification && <div className="rounded-lg bg-violet-50 px-3 py-2 text-sm font-bold text-violet-700"><span className="mr-1 text-violet-500">Qualification:</span>{doctor.qualification}</div>}
+          {doctor.qualification && <div className="rounded-lg bg-violet-50 px-3 py-2 text-sm font-bold text-violet-700">{doctor.qualification}</div>}
         </div>
         {experience && <div className="mt-3 rounded-xl bg-amber-50 px-3 py-2 text-sm font-semibold text-amber-800"><span className="mr-1">Experience:</span>{experience}{experience.toLowerCase().includes("year") ? "" : " years"}</div>}
         <div className="mt-3 flex justify-center"><AvailabilityBadge doctor={doctor} /></div>
