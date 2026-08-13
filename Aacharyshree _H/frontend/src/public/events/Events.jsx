@@ -25,6 +25,15 @@ const uniqueMedia = (values) => [...new Map(values.filter((src) => typeof src ==
 export default function Events() {
   const { t, i18n } = useTranslation();
   const [events, setEvents] = useState([]);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches);
+
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(query.matches);
+    update();
+    query.addEventListener?.("change", update);
+    return () => query.removeEventListener?.("change", update);
+  }, []);
 
   useEffect(() => {
     fetchEvents().then((data) => setEvents(data.map((event) => ({
@@ -49,12 +58,15 @@ export default function Events() {
             return <article key={event.id} className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg sm:rounded-3xl">
               <div className="grid lg:grid-cols-[minmax(280px,0.9fr)_1.1fr]">
                 {media.length ? <div className="relative w-full overflow-hidden bg-slate-100">
-                  <img src={media[0]} alt={event.name} className="block h-[230px] w-full object-contain sm:hidden" />
-                  <Swiper modules={[Pagination]} pagination={{ clickable: true }} className="hidden h-full w-full sm:block sm:h-[300px] lg:min-h-[280px] lg:h-full" spaceBetween={8}>
-                    {media.map((src, i) => <SwiperSlide key={i}>
-                      <img src={src} alt={event.name} className="h-full w-full object-cover" />
-                    </SwiperSlide>)}
-                  </Swiper>
+                  {isMobile ? (
+                    <img src={media[0]} alt={event.name} className="block h-[230px] w-full object-cover object-center" />
+                  ) : (
+                    <Swiper modules={[Pagination]} pagination={{ clickable: true }} className="h-[300px] w-full lg:h-full lg:min-h-[280px]" spaceBetween={8}>
+                      {media.map((src, i) => <SwiperSlide key={i}>
+                        <img src={src} alt={event.name} className="h-full w-full object-cover object-center" />
+                      </SwiperSlide>)}
+                    </Swiper>
+                  )}
                   {media.length > 1 && <span className="pointer-events-none absolute bottom-3 left-1/2 z-10 hidden -translate-x-1/2 rounded-full bg-black/65 px-3 py-1 text-xs font-semibold text-white sm:inline-flex">{t("swipePhotos", "Swipe photos")}</span>}
                 </div> : <div className="h-[230px] bg-slate-100 sm:h-[300px] lg:h-auto lg:min-h-[280px]" />}
 
