@@ -50,7 +50,7 @@ export default function Events() {
 
   return <>
     <Navbar />
-    <main className="min-h-screen bg-white py-8 sm:py-12">
+    <main data-events-carousel="single-image-v2" className="min-h-screen bg-white py-8 sm:py-12">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <h1 className="text-3xl font-bold text-[#0f2742] sm:text-4xl">{t("eventsTitle", "Events")}</h1>
         <p className="mt-2 text-slate-500">{t("eventsSubtitle", "Join our upcoming programmes and celebrations.")}</p>
