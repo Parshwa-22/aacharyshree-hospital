@@ -29,9 +29,9 @@ function EventCarousel({ media, alt }) {
   }, [media.length]);
   const move = (direction) => setIndex((current) => (current + direction + media.length) % media.length);
   return <div className="relative h-[230px] w-full overflow-hidden lg:h-full lg:min-h-[280px]" onTouchStart={(event) => setTouchStart(event.touches[0].clientX)} onTouchEnd={(event) => { if (touchStart === null) return; const delta = event.changedTouches[0].clientX - touchStart; if (Math.abs(delta) > 35) move(delta < 0 ? 1 : -1); setTouchStart(null); }}>
-    <div className="flex h-full w-full transition-transform duration-500 ease-out" style={{ transform: `translate3d(-${index * 100}%, 0, 0)` }}>
-      {media.map((src, mediaIndex) => <div key={`${src}-${mediaIndex}`} className="h-full w-full min-w-full shrink-0"><img src={src} alt={alt} className="block h-full w-full object-cover object-center" /></div>)}
-    </div>
+    {/* Render one image node only. This avoids flex/grid/swiper sizing from ever
+        exposing multiple event photos together at any viewport width. */}
+    <img key={media[index]} src={media[index]} alt={alt} className="block h-full w-full object-cover object-center transition-opacity duration-300" />
     {media.length > 1 && <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1.5 rounded-full bg-black/45 px-2.5 py-1.5">{media.map((src, dotIndex) => <button key={src} type="button" aria-label={`Show image ${dotIndex + 1}`} onClick={() => setIndex(dotIndex)} className={`h-2 w-2 rounded-full ${dotIndex === index ? "bg-white" : "bg-white/45"}`} />)}</div>}
   </div>;
 }
