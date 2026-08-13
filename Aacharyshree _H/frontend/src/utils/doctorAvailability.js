@@ -26,15 +26,13 @@ export function formatMonthlyDays(daysCsv) {
 export function doctorAvailability(doctor, now = new Date()) {
   if (doctor.availabilityType === "ON_CALL") return { available: false, label: "Available on call", detail: "Please call before visiting", tone: "amber" };
   const isMonthly = doctor.availabilityType === "MONTHLY_DAYS";
+  const hasExplicitSchedule = isMonthly ? Boolean(doctor.availableDaysOfMonth) : Boolean(doctor.availableDays);
+  if (!hasExplicitSchedule) return { available: false, label: "", detail: "", tone: "slate" };
   const scheduledToday = isMonthly
     ? (doctor.availableDaysOfMonth || "").split(",").map(Number).includes(now.getDate())
     : !doctor.availableDays || doctor.availableDays.split(",").map((day) => day.trim().toUpperCase()).includes(DAY_CODES[now.getDay()]);
-  const start = minutes(doctor.startTime);
-  const end = minutes(doctor.endTime);
-  const current = now.getHours() * 60 + now.getMinutes();
-  const withinHours = start === null || end === null || (current >= start && current <= end);
   const detail = isMonthly ? formatMonthlyDays(doctor.availableDaysOfMonth) : "Regular consultation schedule";
-  return scheduledToday && withinHours
+  return scheduledToday
     ? { available: true, label: "Available today", detail, tone: "emerald" }
-    : { available: false, label: "Not available today", detail, tone: "slate" };
+    : { available: false, label: "", detail, tone: "slate" };
 }
