@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import AvailabilityBadge from "../../components/doctors/AvailabilityBadge";
 import SpecializationText from "../../components/doctors/SpecializationText";
 import { formatMonthlyDays } from "../../utils/doctorAvailability";
+import AvailabilityDetails from "../../components/doctors/AvailabilityDetails";
 
 function formatTime12h(hhmm) {
   if (!hhmm) return "";
@@ -49,6 +50,7 @@ const DoctorsPage = ({ doctors }) => {
           name: doc.name,
           image: doc.image,
           specialization: doc.specialization,
+          qualification: doc.qualification,
           department: doc.department || "General Medicine",
           experience: doc.experience,
           availableDays: doc.availableDays,
@@ -162,19 +164,19 @@ const DoctorsPage = ({ doctors }) => {
                   <div className="flex flex-1 flex-col p-4 text-center">
                     <SpecializationText className="min-h-[2.5rem] text-gray-800">{getTranslated(doc, "specialization", i18n.language)}</SpecializationText>
 
-                    <p className="mt-1 min-h-[1rem] break-words line-clamp-1 text-xs text-gray-500">
-                      {getTranslated(doc, "department", i18n.language)}
-                    </p>
-
-                    <p className="mt-1 min-h-[1rem] text-xs text-gray-400">
-                      {doc.experience}+ Years Experience
-                    </p>
+                    <div className="mt-2 flex flex-wrap justify-center gap-1.5">
+                      {getTranslated(doc, "department", i18n.language) && <span className="rounded-full bg-sky-50 px-2 py-1 text-[11px] font-semibold text-sky-700">{getTranslated(doc, "department", i18n.language)}</span>}
+                      {doc.qualification && <span className="rounded-full bg-violet-50 px-2 py-1 text-[11px] font-semibold text-violet-700">{doc.qualification}</span>}
+                    </div>
+                    {doc.experience && <p className="mt-2 text-xs font-medium text-slate-500">{doc.experience} {doc.experience.toLowerCase().includes("year") ? "" : "years experience"}</p>}
 
                     <div className="mt-2 flex justify-center">
                       <AvailabilityBadge doctor={doc} />
                     </div>
 
-                    {(doc.availableDays || doc.availableDaysOfMonth || (doc.startTime && doc.endTime)) && (
+                    <AvailabilityDetails doctor={doc} />
+
+                    {false && (doc.availableDays || doc.availableDaysOfMonth || (doc.startTime && doc.endTime)) && (
                       <p className="mt-1 min-h-[1rem] break-words text-xs text-gray-400">
                         <span className="font-semibold text-slate-600">{doc.availabilityType === "MONTHLY_DAYS" ? "Monthly visit: " : "Consultation: "}</span>{scheduleText(doc)}
                         {doc.startTime && doc.endTime

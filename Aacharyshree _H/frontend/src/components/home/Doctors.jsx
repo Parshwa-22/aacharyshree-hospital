@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { fetchDoctors } from "../../api/publicApi";
 import { getTranslated } from "../../utils/translate";
 import AvailabilityBadge from "../doctors/AvailabilityBadge";
-import SpecializationText from "../doctors/SpecializationText";
 
 // Below this many doctors, the seamless-scroll marquee (which works by
 // rendering the list twice back to back) is skipped — with very few
@@ -37,6 +36,11 @@ const DoctorsSection = () => {
 
   const useMarquee = doctors.length >= MARQUEE_MIN_COUNT;
   const displayList = useMarquee ? [...doctors, ...doctors] : doctors;
+  const homeSpecialization = (doc) => {
+    const text = getTranslated(doc, "specialization", i18n.language) || "";
+    const limit = 58;
+    return text.length > limit ? <>{text.slice(0, limit).trimEnd()}… <span className="font-bold text-[#1597C2]">View more</span></> : text;
+  };
 
   const DoctorCard = ({ doc, i }) => (
     <Link to="/doctors" key={`${doc.id ?? doc.name}-${i}`} className="doctor-card block">
@@ -47,14 +51,12 @@ const DoctorsSection = () => {
         </div>
       </div>
       <div className="p-4 text-center">
-        <SpecializationText className="min-h-[2.5rem] text-gray-800">{getTranslated(doc, "specialization", i18n.language)}</SpecializationText>
+        <p className="min-h-[2.5rem] break-words text-sm font-semibold text-gray-800">{homeSpecialization(doc)}</p>
         {doc.department && (
-          <p className="text-xs text-gray-500">{getTranslated(doc, "department", i18n.language)}</p>
+          <p className="mt-1 inline-flex rounded-full bg-sky-50 px-2 py-1 text-xs font-semibold text-sky-700">{getTranslated(doc, "department", i18n.language)}</p>
         )}
         {doc.experience && (
-          <p className="text-xs text-gray-400">
-            {doc.experience}+ {t("doctorsExperience", "Years Experience")}
-          </p>
+          <p className="mt-2 text-xs font-medium text-gray-500">{doc.experience} {doc.experience.toLowerCase().includes("year") ? "" : t("doctorsExperience", "Years Experience")}</p>
         )}
         <div className="mt-2 flex justify-center">
           <AvailabilityBadge doctor={doc} />

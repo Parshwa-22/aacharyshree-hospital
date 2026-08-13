@@ -12,6 +12,7 @@ import AvailabilityBadge from "../../components/doctors/AvailabilityBadge";
 import SpecializationText from "../../components/doctors/SpecializationText";
 import { formatMonthlyDays, formatTimeRange } from "../../utils/doctorAvailability";
 import { formatAvailableDays } from "../../utils/formatDays";
+import AvailabilityDetails from "../../components/doctors/AvailabilityDetails";
 
 export default function DepartmentDetail() {
   const { slug } = useParams();
@@ -167,10 +168,15 @@ export default function DepartmentDetail() {
                     <div className="flex flex-1 flex-col p-4 text-center">
                       <p className="min-h-[1.5rem] break-words line-clamp-2 font-semibold text-[#0f2742]">{doc.name}</p>
                       <SpecializationText className="mt-1 min-h-[2.5rem] font-medium text-slate-500">{getTranslated(doc, "specialization", i18n.language)}</SpecializationText>
+                      <div className="mt-2 flex flex-wrap justify-center gap-1.5">
+                        {doc.qualification && <span className="rounded-full bg-violet-50 px-2 py-1 text-[11px] font-semibold text-violet-700">{doc.qualification}</span>}
+                        {doc.experience && <span className="rounded-full bg-sky-50 px-2 py-1 text-[11px] font-semibold text-sky-700">{doc.experience} {doc.experience.toLowerCase().includes("year") ? "" : "years experience"}</span>}
+                      </div>
                       <div className="mt-2 flex justify-center">
                         <AvailabilityBadge doctor={doc} />
                       </div>
-                      {(doc.availableDays || doc.availableDaysOfMonth || (doc.startTime && doc.endTime)) && (
+                      <AvailabilityDetails doctor={doc} />
+                      {false && (doc.availableDays || doc.availableDaysOfMonth || (doc.startTime && doc.endTime)) && (
                         <p className="mt-2 rounded-lg bg-slate-50 px-2 py-1.5 text-center text-xs leading-relaxed text-slate-500">
                           <span className="font-semibold text-slate-600">{doc.availabilityType === "MONTHLY_DAYS" ? "Monthly visit: " : "Consultation: "}</span>{scheduleText(doc)}
                         </p>

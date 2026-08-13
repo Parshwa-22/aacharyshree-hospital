@@ -24,7 +24,7 @@ export function formatMonthlyDays(daysCsv) {
 }
 
 export function doctorAvailability(doctor, now = new Date()) {
-  if (doctor.availabilityType === "ON_CALL") return { available: false, label: "On call", detail: "Appointment required", tone: "amber" };
+  if (doctor.availabilityType === "ON_CALL") return { available: false, label: "Available on call", detail: "Please call before visiting", tone: "amber" };
   const isMonthly = doctor.availabilityType === "MONTHLY_DAYS";
   const scheduledToday = isMonthly
     ? (doctor.availableDaysOfMonth || "").split(",").map(Number).includes(now.getDate())
@@ -35,6 +35,6 @@ export function doctorAvailability(doctor, now = new Date()) {
   const withinHours = start === null || end === null || (current >= start && current <= end);
   const detail = isMonthly ? formatMonthlyDays(doctor.availableDaysOfMonth) : "Regular consultation schedule";
   return scheduledToday && withinHours
-    ? { available: true, label: "Available now", detail, tone: "emerald" }
-    : { available: false, label: "Not available now", detail, tone: "slate" };
+    ? { available: true, label: "Available today", detail, tone: "emerald" }
+    : { available: false, label: "Not available today", detail, tone: "slate" };
 }
