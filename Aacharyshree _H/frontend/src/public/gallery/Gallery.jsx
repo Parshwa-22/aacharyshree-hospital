@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
 import Navbar from "../../components/home/Navbar";
 import Footer from "../../components/home/Footer";
 import { fetchGallery } from "../../api/publicApi";
@@ -63,18 +61,13 @@ export default function Gallery() {
         <div className="mt-7 grid gap-8 sm:mt-10 sm:gap-10">
           {sections.map((section) => <section key={section.id}>
             <h2 className="mb-4 text-xl font-semibold text-[#0f2742] sm:text-2xl">{section.title}</h2>
-            <div className="flex w-full snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-2 [scrollbar-width:thin] sm:hidden">
+            <div className="flex w-full snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain pb-2 [scrollbar-width:thin]">
               {json(section.photos).map((src, i) => (
-                <div key={i} className="w-full min-w-full shrink-0 snap-center">
+                <div key={i} className="w-full min-w-full shrink-0 snap-center sm:min-w-[46%] lg:min-w-[31%]">
                   <GalleryPhoto src={src} title={section.title} className="h-[min(70vw,22rem)]" />
                 </div>
               ))}
             </div>
-            <Swiper className="hidden w-full sm:block" spaceBetween={18} slidesPerView={2.2} breakpoints={{ 1024: { slidesPerView: 3.2 } }}>
-              {json(section.photos).map((src, i) => <SwiperSlide key={i}>
-                <GalleryPhoto src={src} title={section.title} />
-              </SwiperSlide>)}
-            </Swiper>
           </section>)}
           {sections.length === 0 && <p className="py-16 text-center text-slate-400">{t("noGallery", "No gallery sections published yet.")}</p>}
         </div>
