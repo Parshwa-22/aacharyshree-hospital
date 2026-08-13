@@ -24,7 +24,7 @@ const mediaUrl = (value) => value && value.startsWith("/")
 const galleryUrl = (value) => {
   const url = mediaUrl(value);
   return url.includes("res.cloudinary.com") && url.includes("/image/upload/")
-    ? url.replace("/image/upload/", "/image/upload/f_auto,q_auto,w_1200/")
+    ? url.replace("/image/upload/", "/image/upload/f_jpg,q_82,w_1200/")
     : url;
 };
 
@@ -37,7 +37,7 @@ function GalleryPhoto({ src, title, className = "" }) {
         alt={title}
         loading="eager"
         fetchPriority="high"
-        decoding="async"
+        decoding="sync"
         className="gallery-photo !visible !block h-full w-full object-cover object-center shadow"
       />
     </div>
