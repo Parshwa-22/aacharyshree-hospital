@@ -59,11 +59,11 @@ export default function Events() {
               <div className="grid lg:grid-cols-[minmax(280px,0.9fr)_1.1fr]">
                 {media.length ? <div className="relative w-full overflow-hidden bg-slate-100">
                   {isMobile ? (
-                    <Swiper modules={[Autoplay, Pagination]} autoplay={{ delay: 3200, disableOnInteraction: false }} pagination={{ clickable: true }} className="h-[230px] w-full" spaceBetween={0}>
+                    <Swiper modules={[Autoplay, Pagination]} slidesPerView={1} centeredSlides={false} loop={media.length > 1} autoplay={{ delay: 3200, disableOnInteraction: false }} pagination={{ clickable: true }} className="event-swiper h-[230px] w-full [&_.swiper-wrapper]:h-full [&_.swiper-slide]:h-full" spaceBetween={0}>
                       {media.map((src, i) => <SwiperSlide key={i}><img src={src} alt={event.name} className="block h-full w-full object-cover object-center" /></SwiperSlide>)}
                     </Swiper>
                   ) : (
-                    <Swiper modules={[Autoplay, Pagination]} autoplay={{ delay: 3600, disableOnInteraction: false }} pagination={{ clickable: true }} className="h-[300px] w-full lg:h-full lg:min-h-[280px]" spaceBetween={8}>
+                    <Swiper modules={[Autoplay, Pagination]} slidesPerView={1} centeredSlides={false} loop={media.length > 1} autoplay={{ delay: 3600, disableOnInteraction: false }} pagination={{ clickable: true }} className="event-swiper h-[300px] w-full lg:h-full lg:min-h-[280px] [&_.swiper-wrapper]:h-full [&_.swiper-slide]:h-full" spaceBetween={0}>
                       {media.map((src, i) => <SwiperSlide key={i}>
                         <img src={src} alt={event.name} className="h-full w-full object-cover object-center" />
                       </SwiperSlide>)}
