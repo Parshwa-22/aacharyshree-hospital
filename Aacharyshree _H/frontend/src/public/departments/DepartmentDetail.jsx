@@ -9,6 +9,9 @@ import { getTranslated } from "../../utils/translate";
 import { useTranslation } from "react-i18next";
 import { fetchDoctors, fetchContactSettings } from "../../api/publicApi";
 import AvailabilityBadge from "../../components/doctors/AvailabilityBadge";
+import SpecializationText from "../../components/doctors/SpecializationText";
+import { formatSpecificDates, formatTimeRange } from "../../utils/doctorAvailability";
+import { formatAvailableDays } from "../../utils/formatDays";
 
 export default function DepartmentDetail() {
   const { slug } = useParams();
@@ -100,6 +103,10 @@ export default function DepartmentDetail() {
     .split(",")
     .map((s) => s.trim())
     .filter(Boolean);
+  const scheduleText = (doc) => {
+    const datesOrDays = doc.availabilityType === "SPECIFIC_DATES" ? formatSpecificDates(doc.availableDates) : formatAvailableDays(doc.availableDays);
+    return [datesOrDays, formatTimeRange(doc.startTime, doc.endTime)].filter(Boolean).join(" · ");
+  };
 
   return (
     <>
@@ -159,12 +166,15 @@ export default function DepartmentDetail() {
                     </div>
                     <div className="flex flex-1 flex-col p-4 text-center">
                       <p className="min-h-[1.5rem] break-words line-clamp-2 font-semibold text-[#0f2742]">{doc.name}</p>
-                      <p className="mt-1 min-h-[2.5rem] break-words line-clamp-2 text-sm text-slate-500">
-                        {getTranslated(doc, "specialization", i18n.language)}
-                      </p>
+                      <SpecializationText className="mt-1 min-h-[2.5rem] font-medium text-slate-500">{getTranslated(doc, "specialization", i18n.language)}</SpecializationText>
                       <div className="mt-2 flex justify-center">
-                        <AvailabilityBadge type={doc.availabilityType} />
+                        <AvailabilityBadge doctor={doc} />
                       </div>
+                      {(doc.availableDays || doc.availableDates || (doc.startTime && doc.endTime)) && (
+                        <p className="mt-2 rounded-lg bg-slate-50 px-2 py-1.5 text-center text-xs leading-relaxed text-slate-500">
+                          <span className="font-semibold text-slate-600">{doc.availabilityType === "SPECIFIC_DATES" ? "Scheduled dates: " : "Consultation: "}</span>{scheduleText(doc)}
+                        </p>
+                      )}
                       {appointmentPhone && (
                         <a
                           href={`tel:${appointmentPhone}`}

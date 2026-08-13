@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { fetchDoctors } from "../../api/publicApi";
 import { getTranslated } from "../../utils/translate";
 import AvailabilityBadge from "../doctors/AvailabilityBadge";
+import SpecializationText from "../doctors/SpecializationText";
 
 // Below this many doctors, the seamless-scroll marquee (which works by
 // rendering the list twice back to back) is skipped — with very few
@@ -46,7 +47,7 @@ const DoctorsSection = () => {
         </div>
       </div>
       <div className="p-4 text-center">
-        <p className="text-sm font-semibold text-gray-800 min-h-[2.5rem] line-clamp-2">{getTranslated(doc, "specialization", i18n.language)}</p>
+        <SpecializationText className="min-h-[2.5rem] text-gray-800">{getTranslated(doc, "specialization", i18n.language)}</SpecializationText>
         {doc.department && (
           <p className="text-xs text-gray-500">{getTranslated(doc, "department", i18n.language)}</p>
         )}
@@ -56,7 +57,7 @@ const DoctorsSection = () => {
           </p>
         )}
         <div className="mt-2 flex justify-center">
-          <AvailabilityBadge type={doc.availabilityType} />
+          <AvailabilityBadge doctor={doc} />
         </div>
       </div>
     </Link>

@@ -15,6 +15,8 @@ function buildInitialValues(fields, existing) {
       values[field.name] = false;
     } else if (field.type === "checkboxGroup") {
       values[field.name] = "";
+    } else if (field.type === "dateList") {
+      values[field.name] = "";
     } else {
       values[field.name] = "";
     }
@@ -46,6 +48,16 @@ export default function ItemFormModal({ title, fields, initialItem, onClose, onS
     const current = values[name] ? values[name].split(",").map((s) => s.trim()).filter(Boolean) : [];
     const next = current.includes(option) ? current.filter((o) => o !== option) : [...current, option];
     setField(name, next.join(","));
+  };
+
+  const addDateToList = (name, date) => {
+    if (!date) return;
+    const current = (values[name] || "").split(",").map((item) => item.trim()).filter(Boolean);
+    if (!current.includes(date)) setField(name, [...current, date].sort().join(","));
+  };
+
+  const removeDateFromList = (name, date) => {
+    setField(name, (values[name] || "").split(",").map((item) => item.trim()).filter((item) => item && item !== date).join(","));
   };
 
   const handleSubmit = async (e) => {
@@ -151,6 +163,28 @@ export default function ItemFormModal({ title, fields, initialItem, onClose, onS
                     onChange={(e) => setField(field.name, e.target.value)}
                     className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand"
                   />
+                </>
+              )}
+
+              {field.type === "dateList" && (
+                <>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">{field.label}</label>
+                  <div className="flex gap-2">
+                    <input
+                      type="date"
+                      min={new Date().toISOString().slice(0, 10)}
+                      onChange={(e) => { addDateToList(field.name, e.target.value); e.target.value = ""; }}
+                      className="flex-1 rounded-md border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand"
+                    />
+                  </div>
+                  <p className="mt-1 text-xs text-slate-400">{field.help || "Choose a date to add it to the schedule."}</p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {(values[field.name] || "").split(",").map((date) => date.trim()).filter(Boolean).sort().map((date) => (
+                      <button key={date} type="button" onClick={() => removeDateFromList(field.name, date)} className="rounded-full bg-brand/10 px-2.5 py-1 text-xs font-medium text-brand-dark hover:bg-red-50 hover:text-red-600" title="Remove date">
+                        {new Date(`${date}T00:00:00`).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" })} ×
+                      </button>
+                    ))}
+                  </div>
                 </>
               )}
 

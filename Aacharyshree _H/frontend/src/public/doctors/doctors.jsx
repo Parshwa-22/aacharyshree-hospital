@@ -7,6 +7,8 @@ import { formatAvailableDays } from "../../utils/formatDays";
 import { getTranslated } from "../../utils/translate";
 import { useTranslation } from "react-i18next";
 import AvailabilityBadge from "../../components/doctors/AvailabilityBadge";
+import SpecializationText from "../../components/doctors/SpecializationText";
+import { formatSpecificDates } from "../../utils/doctorAvailability";
 
 function formatTime12h(hhmm) {
   if (!hhmm) return "";
@@ -50,6 +52,7 @@ const DoctorsPage = ({ doctors }) => {
           department: doc.department || "General Medicine",
           experience: doc.experience,
           availableDays: doc.availableDays,
+          availableDates: doc.availableDates,
           startTime: doc.startTime,
           endTime: doc.endTime,
           availabilityType: doc.availabilityType,
@@ -78,6 +81,11 @@ const DoctorsPage = ({ doctors }) => {
     acc[doc.department].push(doc);
     return acc;
   }, {});
+
+  const scheduleText = (doc) => {
+    const datesOrDays = doc.availabilityType === "SPECIFIC_DATES" ? formatSpecificDates(doc.availableDates) : formatAvailableDays(doc.availableDays);
+    return datesOrDays;
+  };
 
   return (
     <>
@@ -152,9 +160,7 @@ const DoctorsPage = ({ doctors }) => {
 
                   {/* DETAILS */}
                   <div className="flex flex-1 flex-col p-4 text-center">
-                    <p className="min-h-[2.5rem] break-words line-clamp-2 text-sm font-semibold text-gray-800">
-                      {getTranslated(doc, "specialization", i18n.language)}
-                    </p>
+                    <SpecializationText className="min-h-[2.5rem] text-gray-800">{getTranslated(doc, "specialization", i18n.language)}</SpecializationText>
 
                     <p className="mt-1 min-h-[1rem] break-words line-clamp-1 text-xs text-gray-500">
                       {getTranslated(doc, "department", i18n.language)}
@@ -165,12 +171,12 @@ const DoctorsPage = ({ doctors }) => {
                     </p>
 
                     <div className="mt-2 flex justify-center">
-                      <AvailabilityBadge type={doc.availabilityType} />
+                      <AvailabilityBadge doctor={doc} />
                     </div>
 
-                    {(doc.availableDays || (doc.startTime && doc.endTime)) && (
+                    {(doc.availableDays || doc.availableDates || (doc.startTime && doc.endTime)) && (
                       <p className="mt-1 min-h-[1rem] break-words text-xs text-gray-400">
-                        {formatAvailableDays(doc.availableDays)}
+                        <span className="font-semibold text-slate-600">{doc.availabilityType === "SPECIFIC_DATES" ? "Scheduled dates: " : "Consultation: "}</span>{scheduleText(doc)}
                         {doc.startTime && doc.endTime
                           ? ` · ${formatTime12h(doc.startTime)}–${formatTime12h(doc.endTime)}`
                           : ""}

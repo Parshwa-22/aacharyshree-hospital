@@ -50,6 +50,11 @@ public class Doctor {
     private String startTime;
     private String endTime;
 
+    // Comma-separated ISO dates for doctors who visit on selected calendar
+    // dates rather than a recurring weekly schedule, e.g. "2026-08-15,2026-08-29".
+    @Column(length = 1000)
+    private String availableDates;
+
     @Enumerated(EnumType.STRING)
     private AvailabilityType availabilityType = AvailabilityType.DAILY;
 
@@ -79,6 +84,6 @@ public class Doctor {
     private LocalDateTime updatedAt;
 
     public enum AvailabilityType {
-        DAILY, ON_CALL
+        DAILY, ON_CALL, SPECIFIC_DATES
     }
 }
