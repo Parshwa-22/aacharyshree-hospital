@@ -1,9 +1,5 @@
 import { useEffect, useState } from "react";
 import { CalendarDays, MapPin, Clock, Video } from "lucide-react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
 import Navbar from "../../components/home/Navbar";
 import Footer from "../../components/home/Footer";
 import { fetchEvents } from "../../api/publicApi";
@@ -22,18 +18,27 @@ const json = (value) => {
 
 const uniqueMedia = (values) => [...new Map(values.filter((src) => typeof src === "string" && src.trim()).map((src) => [src.trim(), src.trim()])).values()];
 
+function EventCarousel({ media, alt }) {
+  const [index, setIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(null);
+  useEffect(() => { setIndex(0); }, [media.join("|")]);
+  useEffect(() => {
+    if (media.length < 2) return undefined;
+    const timer = window.setInterval(() => setIndex((current) => (current + 1) % media.length), 3600);
+    return () => window.clearInterval(timer);
+  }, [media.length]);
+  const move = (direction) => setIndex((current) => (current + direction + media.length) % media.length);
+  return <div className="relative h-[230px] w-full overflow-hidden lg:h-full lg:min-h-[280px]" onTouchStart={(event) => setTouchStart(event.touches[0].clientX)} onTouchEnd={(event) => { if (touchStart === null) return; const delta = event.changedTouches[0].clientX - touchStart; if (Math.abs(delta) > 35) move(delta < 0 ? 1 : -1); setTouchStart(null); }}>
+    <div className="flex h-full w-full transition-transform duration-500 ease-out" style={{ transform: `translate3d(-${index * 100}%, 0, 0)` }}>
+      {media.map((src, mediaIndex) => <div key={`${src}-${mediaIndex}`} className="h-full w-full min-w-full shrink-0"><img src={src} alt={alt} className="block h-full w-full object-cover object-center" /></div>)}
+    </div>
+    {media.length > 1 && <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1.5 rounded-full bg-black/45 px-2.5 py-1.5">{media.map((src, dotIndex) => <button key={src} type="button" aria-label={`Show image ${dotIndex + 1}`} onClick={() => setIndex(dotIndex)} className={`h-2 w-2 rounded-full ${dotIndex === index ? "bg-white" : "bg-white/45"}`} />)}</div>}
+  </div>;
+}
+
 export default function Events() {
   const { t, i18n } = useTranslation();
   const [events, setEvents] = useState([]);
-  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches);
-
-  useEffect(() => {
-    const query = window.matchMedia("(max-width: 767px)");
-    const update = () => setIsMobile(query.matches);
-    update();
-    query.addEventListener?.("change", update);
-    return () => query.removeEventListener?.("change", update);
-  }, []);
 
   useEffect(() => {
     fetchEvents().then((data) => setEvents(data.map((event) => ({
@@ -58,17 +63,7 @@ export default function Events() {
             return <article key={event.id} className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg sm:rounded-3xl">
               <div className="grid lg:grid-cols-[minmax(280px,0.9fr)_1.1fr]">
                 {media.length ? <div className="relative w-full overflow-hidden bg-slate-100">
-                  {isMobile ? (
-                    <Swiper modules={[Autoplay, Pagination]} slidesPerView={1} centeredSlides={false} loop={media.length > 1} autoplay={{ delay: 3200, disableOnInteraction: false }} pagination={{ clickable: true }} className="event-swiper h-[230px] w-full [&_.swiper-wrapper]:h-full [&_.swiper-slide]:h-full" spaceBetween={0}>
-                      {media.map((src, i) => <SwiperSlide key={i}><img src={src} alt={event.name} className="block h-full w-full object-cover object-center" /></SwiperSlide>)}
-                    </Swiper>
-                  ) : (
-                    <Swiper modules={[Autoplay, Pagination]} slidesPerView={1} centeredSlides={false} loop={media.length > 1} autoplay={{ delay: 3600, disableOnInteraction: false }} pagination={{ clickable: true }} className="event-swiper h-[300px] w-full lg:h-full lg:min-h-[280px] [&_.swiper-wrapper]:h-full [&_.swiper-slide]:h-full" spaceBetween={0}>
-                      {media.map((src, i) => <SwiperSlide key={i}>
-                        <img src={src} alt={event.name} className="h-full w-full object-cover object-center" />
-                      </SwiperSlide>)}
-                    </Swiper>
-                  )}
+                  <EventCarousel media={media} alt={event.name} />
                   {media.length > 1 && <span className="pointer-events-none absolute bottom-3 left-1/2 z-10 hidden -translate-x-1/2 rounded-full bg-black/65 px-3 py-1 text-xs font-semibold text-white sm:inline-flex">{t("swipePhotos", "Swipe photos")}</span>}
                 </div> : <div className="h-[230px] bg-slate-100 sm:h-[300px] lg:h-auto lg:min-h-[280px]" />}
 
