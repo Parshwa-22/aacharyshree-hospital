@@ -20,6 +20,8 @@ const json = (value) => {
   }
 };
 
+const uniqueMedia = (values) => [...new Map(values.filter((src) => typeof src === "string" && src.trim()).map((src) => [src.trim(), src.trim()])).values()];
+
 export default function Events() {
   const { t, i18n } = useTranslation();
   const [events, setEvents] = useState([]);
@@ -41,7 +43,9 @@ export default function Events() {
 
         <div className="mt-7 grid gap-5 sm:mt-10 sm:gap-8">
           {events.map((event) => {
-            const media = [...json(event.posterImages), ...json(event.photos)];
+            // Admin can store the same upload in both posterImages and photos;
+            // dedupe by URL so mobile never renders the same image twice.
+            const media = uniqueMedia([...json(event.posterImages), ...json(event.photos)]);
             return <article key={event.id} className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-lg sm:rounded-3xl">
               <div className="grid lg:grid-cols-[minmax(280px,0.9fr)_1.1fr]">
                 {media.length ? <div className="relative w-full overflow-hidden bg-slate-100">
