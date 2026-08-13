@@ -19,7 +19,25 @@ const json = (value) => {
 
 const mediaUrl = (value) => value && value.startsWith("/")
   ? `${import.meta.env.VITE_API_BASE_URL || ""}${value}`
-  : value;
+  : typeof value === "string" ? value.trim() : "";
+
+function GalleryPhoto({ src, title, className = "" }) {
+  const [failed, setFailed] = useState(false);
+  const url = mediaUrl(src);
+  if (!url || failed) return <div className={`flex h-52 w-full items-center justify-center rounded-2xl bg-slate-100 px-4 text-center text-xs text-slate-400 ${className}`}>Photo unavailable</div>;
+  return (
+    <div className={`relative w-full overflow-hidden rounded-2xl bg-slate-100 ${className}`}>
+      <img
+        src={url}
+        alt={title}
+        loading="eager"
+        decoding="async"
+        onError={() => setFailed(true)}
+        className="gallery-photo block h-full min-h-[13rem] w-full object-contain object-center shadow"
+      />
+    </div>
+  );
+}
 
 export default function Gallery() {
   const { t, i18n } = useTranslation();
@@ -41,11 +59,11 @@ export default function Gallery() {
           {sections.map((section) => <section key={section.id}>
             <h2 className="mb-4 text-xl font-semibold text-[#0f2742] sm:text-2xl">{section.title}</h2>
             <div className="grid gap-4 sm:hidden">
-              {json(section.photos).map((src, i) => <img key={i} src={mediaUrl(src)} alt={section.title} className="block h-52 w-full rounded-2xl object-cover shadow" />)}
+              {json(section.photos).map((src, i) => <GalleryPhoto key={i} src={src} title={section.title} />)}
             </div>
             <Swiper className="hidden sm:block" spaceBetween={18} slidesPerView={2.2} breakpoints={{ 1024: { slidesPerView: 3.2 } }}>
               {json(section.photos).map((src, i) => <SwiperSlide key={i}>
-                <img src={mediaUrl(src)} alt={section.title} className="h-64 w-full rounded-2xl object-cover shadow" />
+                <GalleryPhoto src={src} title={section.title} className="h-64" />
               </SwiperSlide>)}
             </Swiper>
           </section>)}
