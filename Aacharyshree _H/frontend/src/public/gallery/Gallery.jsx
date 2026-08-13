@@ -21,16 +21,24 @@ const mediaUrl = (value) => value && value.startsWith("/")
   ? `${import.meta.env.VITE_API_BASE_URL || ""}${value}`
   : typeof value === "string" ? value.trim() : "";
 
+const galleryUrl = (value) => {
+  const url = mediaUrl(value);
+  return url.includes("res.cloudinary.com") && url.includes("/image/upload/")
+    ? url.replace("/image/upload/", "/image/upload/f_auto,q_auto,w_1200/")
+    : url;
+};
+
 function GalleryPhoto({ src, title, className = "" }) {
-  const url = mediaUrl(src);
+  const url = galleryUrl(src);
   return (
     <div className={`relative h-64 w-full overflow-hidden rounded-2xl bg-slate-100 ${className}`}>
       <img
         src={url}
         alt={title}
         loading="eager"
+        fetchPriority="high"
         decoding="async"
-        className="gallery-photo block h-full w-full object-cover object-center shadow"
+        className="gallery-photo !visible !block h-full w-full object-cover object-center shadow"
       />
     </div>
   );
