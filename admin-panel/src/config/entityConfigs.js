@@ -31,6 +31,7 @@ export const DEPARTMENT_OPTIONS = [
 ];
 
 export const DAY_OPTIONS = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+export const MONTH_DAY_OPTIONS = Array.from({ length: 31 }, (_, index) => String(index + 1));
 
 export const ROOM_TYPE_OPTIONS = [
   "General Ward", "Semi-Private", "Private Room", "Deluxe Room",
@@ -127,15 +128,15 @@ export const entityConfigs = {
         name: "availabilityType",
         label: "Availability Schedule",
         type: "select",
-        options: ["DAILY", "ON_CALL", "SPECIFIC_DATES"],
+        options: ["DAILY", "MONTHLY_DAYS", "ON_CALL"],
         default: "DAILY",
       },
       {
-        name: "availableDates",
-        label: "Appointment Dates",
-        type: "dateList",
-        showIf: { field: "availabilityType", equals: "SPECIFIC_DATES" },
-        help: "Add every date this doctor will be available. The time window above applies to each selected date.",
+        name: "availableDaysOfMonth",
+        label: "Days of Every Month",
+        type: "checkboxGroup",
+        options: MONTH_DAY_OPTIONS,
+        showIf: { field: "availabilityType", equals: "MONTHLY_DAYS" },
       },
       { name: "image", label: "Photo", type: "image" },
       { name: "description", label: "Description", type: "textarea" },

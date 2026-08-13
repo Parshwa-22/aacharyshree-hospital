@@ -55,7 +55,7 @@ public class DoctorServiceImpl implements DoctorService {
         existing.setAvailableDays(incoming.getAvailableDays());
         existing.setStartTime(incoming.getStartTime());
         existing.setEndTime(incoming.getEndTime());
-        existing.setAvailableDates(incoming.getAvailableDates());
+        existing.setAvailableDaysOfMonth(incoming.getAvailableDaysOfMonth());
         if (incoming.getAvailabilityType() != null) {
             existing.setAvailabilityType(incoming.getAvailabilityType());
         }

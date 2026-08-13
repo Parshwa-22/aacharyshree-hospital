@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { fetchDoctors, fetchContactSettings } from "../../api/publicApi";
 import AvailabilityBadge from "../../components/doctors/AvailabilityBadge";
 import SpecializationText from "../../components/doctors/SpecializationText";
-import { formatSpecificDates, formatTimeRange } from "../../utils/doctorAvailability";
+import { formatMonthlyDays, formatTimeRange } from "../../utils/doctorAvailability";
 import { formatAvailableDays } from "../../utils/formatDays";
 
 export default function DepartmentDetail() {
@@ -104,7 +104,7 @@ export default function DepartmentDetail() {
     .map((s) => s.trim())
     .filter(Boolean);
   const scheduleText = (doc) => {
-    const datesOrDays = doc.availabilityType === "SPECIFIC_DATES" ? formatSpecificDates(doc.availableDates) : formatAvailableDays(doc.availableDays);
+    const datesOrDays = doc.availabilityType === "MONTHLY_DAYS" ? formatMonthlyDays(doc.availableDaysOfMonth) : formatAvailableDays(doc.availableDays);
     return [datesOrDays, formatTimeRange(doc.startTime, doc.endTime)].filter(Boolean).join(" · ");
   };
 
@@ -170,9 +170,9 @@ export default function DepartmentDetail() {
                       <div className="mt-2 flex justify-center">
                         <AvailabilityBadge doctor={doc} />
                       </div>
-                      {(doc.availableDays || doc.availableDates || (doc.startTime && doc.endTime)) && (
+                      {(doc.availableDays || doc.availableDaysOfMonth || (doc.startTime && doc.endTime)) && (
                         <p className="mt-2 rounded-lg bg-slate-50 px-2 py-1.5 text-center text-xs leading-relaxed text-slate-500">
-                          <span className="font-semibold text-slate-600">{doc.availabilityType === "SPECIFIC_DATES" ? "Scheduled dates: " : "Consultation: "}</span>{scheduleText(doc)}
+                          <span className="font-semibold text-slate-600">{doc.availabilityType === "MONTHLY_DAYS" ? "Monthly visit: " : "Consultation: "}</span>{scheduleText(doc)}
                         </p>
                       )}
                       {appointmentPhone && (

@@ -16,24 +16,24 @@ export function formatTimeRange(startTime, endTime) {
   return startTime && endTime ? `${format(startTime)} – ${format(endTime)}` : "";
 }
 
-export function formatSpecificDates(datesCsv) {
-  const dates = (datesCsv || "").split(",").map((date) => date.trim()).filter(Boolean).sort();
-  if (!dates.length) return "Dates to be announced";
-  return dates.map((date) => new Date(`${date}T00:00:00`).toLocaleDateString(undefined, { day: "numeric", month: "short" })).join(", ");
+export function formatMonthlyDays(daysCsv) {
+  const days = [...new Set((daysCsv || "").split(",").map(Number).filter((day) => Number.isInteger(day) && day >= 1 && day <= 31))].sort((a, b) => a - b);
+  if (!days.length) return "Dates to be announced";
+  const suffix = (day) => (day % 10 === 1 && day % 100 !== 11 ? "st" : day % 10 === 2 && day % 100 !== 12 ? "nd" : day % 10 === 3 && day % 100 !== 13 ? "rd" : "th");
+  return `Every month on ${days.map((day) => `${day}${suffix(day)}`).join(", ")}`;
 }
 
 export function doctorAvailability(doctor, now = new Date()) {
   if (doctor.availabilityType === "ON_CALL") return { available: false, label: "On call", detail: "Appointment required", tone: "amber" };
-  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
-  const isSpecificDate = doctor.availabilityType === "SPECIFIC_DATES";
-  const scheduledToday = isSpecificDate
-    ? (doctor.availableDates || "").split(",").map((date) => date.trim()).includes(today)
+  const isMonthly = doctor.availabilityType === "MONTHLY_DAYS";
+  const scheduledToday = isMonthly
+    ? (doctor.availableDaysOfMonth || "").split(",").map(Number).includes(now.getDate())
     : !doctor.availableDays || doctor.availableDays.split(",").map((day) => day.trim().toUpperCase()).includes(DAY_CODES[now.getDay()]);
   const start = minutes(doctor.startTime);
   const end = minutes(doctor.endTime);
   const current = now.getHours() * 60 + now.getMinutes();
   const withinHours = start === null || end === null || (current >= start && current <= end);
-  const detail = isSpecificDate ? formatSpecificDates(doctor.availableDates) : "Regular consultation schedule";
+  const detail = isMonthly ? formatMonthlyDays(doctor.availableDaysOfMonth) : "Regular consultation schedule";
   return scheduledToday && withinHours
     ? { available: true, label: "Available now", detail, tone: "emerald" }
     : { available: false, label: "Not available now", detail, tone: "slate" };

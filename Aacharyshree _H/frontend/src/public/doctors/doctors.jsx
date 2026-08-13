@@ -8,7 +8,7 @@ import { getTranslated } from "../../utils/translate";
 import { useTranslation } from "react-i18next";
 import AvailabilityBadge from "../../components/doctors/AvailabilityBadge";
 import SpecializationText from "../../components/doctors/SpecializationText";
-import { formatSpecificDates } from "../../utils/doctorAvailability";
+import { formatMonthlyDays } from "../../utils/doctorAvailability";
 
 function formatTime12h(hhmm) {
   if (!hhmm) return "";
@@ -52,7 +52,7 @@ const DoctorsPage = ({ doctors }) => {
           department: doc.department || "General Medicine",
           experience: doc.experience,
           availableDays: doc.availableDays,
-          availableDates: doc.availableDates,
+          availableDaysOfMonth: doc.availableDaysOfMonth,
           startTime: doc.startTime,
           endTime: doc.endTime,
           availabilityType: doc.availabilityType,
@@ -83,7 +83,7 @@ const DoctorsPage = ({ doctors }) => {
   }, {});
 
   const scheduleText = (doc) => {
-    const datesOrDays = doc.availabilityType === "SPECIFIC_DATES" ? formatSpecificDates(doc.availableDates) : formatAvailableDays(doc.availableDays);
+    const datesOrDays = doc.availabilityType === "MONTHLY_DAYS" ? formatMonthlyDays(doc.availableDaysOfMonth) : formatAvailableDays(doc.availableDays);
     return datesOrDays;
   };
 
@@ -174,9 +174,9 @@ const DoctorsPage = ({ doctors }) => {
                       <AvailabilityBadge doctor={doc} />
                     </div>
 
-                    {(doc.availableDays || doc.availableDates || (doc.startTime && doc.endTime)) && (
+                    {(doc.availableDays || doc.availableDaysOfMonth || (doc.startTime && doc.endTime)) && (
                       <p className="mt-1 min-h-[1rem] break-words text-xs text-gray-400">
-                        <span className="font-semibold text-slate-600">{doc.availabilityType === "SPECIFIC_DATES" ? "Scheduled dates: " : "Consultation: "}</span>{scheduleText(doc)}
+                        <span className="font-semibold text-slate-600">{doc.availabilityType === "MONTHLY_DAYS" ? "Monthly visit: " : "Consultation: "}</span>{scheduleText(doc)}
                         {doc.startTime && doc.endTime
                           ? ` · ${formatTime12h(doc.startTime)}–${formatTime12h(doc.endTime)}`
                           : ""}
